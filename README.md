@@ -1,2 +1,4 @@
 # Boba_Boy
-Collect boba as fast as you can! There are deliveries waiting for you!
+Help Boba Boy collect the bobas and deliver them to the end! 
+Watch out for the obstacles and be fast! 
+Orders are waiting!
