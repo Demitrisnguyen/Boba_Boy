@@ -4,7 +4,9 @@ BobaBoy = {
     },
     
     createBobaBoy: function(){
-      //bruh
+      let bobaboydiv = document.createElement("div");
+      bobaboydiv.classname = "boy"
+      this.Boba_container.append(bobaboydiv)
     },
 
     createObstacles: function(){
