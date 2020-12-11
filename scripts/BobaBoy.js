@@ -75,15 +75,16 @@ BobaBoyApp = {
     },
 
     walk: function(){
-
+    
     },
 
     moveBobaBoy: function(){
       this.Boy.x_pos = this.Boy.x_pos + this.Boy.x_vel
       this.Boy.y_pos = this.Boy.y_pos - this.Boy.y_vel
-
-      this.Boy.element.style.left = this.Boy.x_pos
-      this.Boy.element.style.top = this.Boy.y_pos
+      
+//these go in a render function:
+      //this.Boy.element.style.left = this.Boy.x_pos
+      //this.Boy.element.style.top = this.Boy.y_pos
     },
   }
   
