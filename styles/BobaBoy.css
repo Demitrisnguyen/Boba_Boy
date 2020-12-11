@@ -2,10 +2,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 800px;
+    width: 1000px;
     height: 600px;
     margin: auto;
-    border: solid 1px white;
+    border: solid 1px black;
     background-color: tan;
     border-radius: 10px;
 }

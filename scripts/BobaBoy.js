@@ -10,7 +10,7 @@ BobaBoyApp = {
     
     createBobaBoy: function(){
       let bobaboydiv = document.createElement("div");
-      bobaboydiv.classname = "boy";
+      bobaboydiv.className = "boy";
       this.container.append(bobaboydiv);
       let Boy = {
         color: "black",
@@ -23,7 +23,6 @@ BobaBoyApp = {
       }
       return Boy
     },
-
     startGame: function(){
       this.simulation = setInterval(this.animate.bind(BobaBoyApp), 30)
     },
