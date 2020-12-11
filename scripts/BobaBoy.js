@@ -1,6 +1,8 @@
-BobaBoy = {
+BobaBoyApp = {
 
     container: document.getElementById("Boba_container"),
+
+    simulation: undefined,
 
     init: function() {
       this.createBobaBoy()
@@ -8,16 +10,22 @@ BobaBoy = {
     
     createBobaBoy: function(){
       let bobaboydiv = document.createElement("div");
-      bobaboydiv.classname = "boy"
-      this.container.append(bobaboydiv)
-      let BobaBoy = {
+      bobaboydiv.classname = "boy";
+      this.container.append(bobaboydiv);
+      let Boy = {
         color: "black",
         radius: 10,
         x_pos: Math.random() * 700,
         y_pos: Math.random() * 500,
         x_vel: 0,
         y_vel: 0,
+        element: bobaboydiv,
       }
+      return Boy
+    },
+
+    startGame: function(){
+      this.simulation = setInterval(this.animate.bind(BobaBoyApp), 30)
     },
 
     createObstacles: function(){
@@ -36,7 +44,7 @@ BobaBoy = {
 
     },
 
-    animateBobaBoy: function(){
+    animate: function(){
 
     },
 
@@ -66,4 +74,4 @@ BobaBoy = {
     },
   }
   
-BobaBoy.init();
+BobaBoyApp.init();
