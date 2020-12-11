@@ -6,6 +6,7 @@ BobaBoyApp = {
 
     init: function() {
       this.createBobaBoy()
+      this.createObstacles()
     },
     
     createBobaBoy: function(){
@@ -13,7 +14,6 @@ BobaBoyApp = {
       bobaboydiv.className = "boy";
       this.container.append(bobaboydiv);
       let Boy = {
-        color: "black",
         radius: 10,
         x_pos: Math.random() * 700,
         y_pos: Math.random() * 500,
@@ -28,7 +28,13 @@ BobaBoyApp = {
     },
 
     createObstacles: function(){
-
+      let platformdiv = document.createElement("div");
+      platformdiv.className = "platform";
+      this.container.append(platformdiv);
+      let platform = {
+        element: platformdiv,
+      }
+      return platform
     },
 
     createHearts: function(){
