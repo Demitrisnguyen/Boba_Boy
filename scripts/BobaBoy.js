@@ -124,10 +124,6 @@ BobaBoyApp = {
       if (this.boy.y_pos > 480){
         this.boy.y_pos = 480
       }
-
-//these go in a render function:
-      //this.Boy.element.style.left = this.Boy.x_pos
-      //this.Boy.element.style.top = this.Boy.y_pos
     },
 
     renderBobaBoy: function(){
