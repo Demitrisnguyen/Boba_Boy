@@ -23,7 +23,6 @@ BobaBoyApp = {
         y_pos: 480,
         x_vel: 0,
         y_vel: 0,
-        y_acc: 0,
         element: bobaboydiv,
       }
       BobaBoyApp.boy = Boy
