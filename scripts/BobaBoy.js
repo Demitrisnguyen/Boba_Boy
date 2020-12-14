@@ -13,6 +13,7 @@ BobaBoyApp = {
     this.createPlatforms()
     this.startGame()
     this.movement()
+      
     
   },
 
@@ -33,7 +34,7 @@ BobaBoyApp = {
   },
 
   startGame: function () {
-    this.simulation = setInterval(this.animate.bind(BobaBoyApp), 30)
+    this.simulation = setInterval(this.animate.bind(BobaBoyApp), 25)
   },
 
   createObstacles: function () {
@@ -128,7 +129,10 @@ BobaBoyApp = {
 
   calculateVelocity: function () {
     //calculated velocity here, factoring in gravity.
-    return this.boy.y_vel = this.boy.y_vel - 1
+    if(this.boy.onPlatform == true){
+
+    }
+    return this.boy.y_vel = this.boy.y_vel - 1;
   },
 
   moveBobaBoy: function () {
@@ -142,6 +146,8 @@ BobaBoyApp = {
   renderBobaBoy: function () {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
+    this.platarr[0].element.style.left = this.platarr[0].x_pos + "px";
+    this.platarr[0].element.style.top = this.platarr[0].y_pos + "px";
   },
 
   determinePlatform: function () {
@@ -152,6 +158,12 @@ BobaBoyApp = {
     else {
       this.boy.onPlatform = false
     }
+    if (this.boy.y_pos == this.platarr[0].y_pos && this.boy.x_pos >= this.platarr[0].x_pos && this.boy.x_pos <= this.platarr[0].x_pos + 100) {
+      this.boy.y_vel = 0;
+      this.boy.onPlatform = true;
+      console.log("Collision");
+    }
+
   },
 }
 
