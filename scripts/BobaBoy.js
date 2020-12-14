@@ -104,9 +104,12 @@ BobaBoyApp = {
         }
         if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
           if(BobaBoyApp.boy.y_vel > 0){
-            //only make velocity = 0 when the velocity is positive
+            //only make velocity decrease when the velocity is positive
             //this makes it so that when the player releases jump key, bobaboy will start to fall.
-            BobaBoyApp.boy.y_vel = 0
+            //gives player more control over jump.
+            BobaBoyApp.boy.y_vel = BobaBoyApp.boy.y_vel - 8.5
+            //making the value "8.5" higher make it harder to jump, but more control.
+            //8.5 seems like a good integer to use for a natural jump.
           }
         }
       }
