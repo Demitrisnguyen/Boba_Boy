@@ -10,11 +10,16 @@ BobaBoyApp = {
 
   init: function () {
     this.createBobaBoy()
-    this.createPlatforms()
     this.startGame()
     this.movement()
-      
     
+    for(let i = 0; i < 2; i++){
+      BobaBoyApp.platarr.push(this.createPlatforms())
+    }
+    this.platarr[0].x_pos = 100
+    this.platarr[0].y_pos = 400
+    this.platarr[1].x_pos = 200
+    this.platarr[1].y_pos = 300
   },
 
   createBobaBoy: function () {
@@ -56,11 +61,11 @@ BobaBoyApp = {
     let platform = {
       element: platformdiv,
       x_pos: 100,
-      y_pos: 400,
+      y_pos: 390,
       x_length: 100,
       y_length: 10,
     }
-    BobaBoyApp.platarr.push(platform)
+    return platform
   },
 
   animate: function () {
@@ -146,8 +151,10 @@ BobaBoyApp = {
   renderBobaBoy: function () {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
-    this.platarr[0].element.style.left = this.platarr[0].x_pos + "px";
-    this.platarr[0].element.style.top = this.platarr[0].y_pos + "px";
+    for (let i = 0; i < this.platarr.length; i++) {
+      this.platarr[i].element.style.left = this.platarr[i].x_pos + "px";
+      this.platarr[i].element.style.top = this.platarr[i].y_pos + "px";
+    }
   },
 
   determinePlatform: function () {
@@ -158,11 +165,15 @@ BobaBoyApp = {
     else {
       this.boy.onPlatform = false
     }
-    if (this.boy.y_pos == this.platarr[0].y_pos && this.boy.x_pos >= this.platarr[0].x_pos && this.boy.x_pos <= this.platarr[0].x_pos + 100) {
-      this.boy.y_vel = 0;
-      this.boy.onPlatform = true;
-      console.log("Collision");
+    for (let i = 0; i < this.platarr.length; i++) {
+      if (this.boy.y_pos + 10 >= this.platarr[i].y_pos - 10 && this.boy.y_pos + 10 <= this.platarr[i].y_pos && this.boy.x_pos +15 >= this.platarr[i].x_pos && this.boy.x_pos +10 <= this.platarr[i].x_pos + 100) {
+        this.boy.y_vel = 0;
+        this.boy.y_pos = this.platarr[i].y_pos - 20
+        this.boy.onPlatform = true;
+        console.log("Collision");
+      }
     }
+    
 
   },
 }

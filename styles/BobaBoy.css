@@ -37,9 +37,7 @@ body {
 .platform {
   height: 10px;
   width: 100px;
-  background-color: brown;
+  background-color: tan;
   border: 2px solid green;
   position:absolute;
-  top: 400px;
-  left: 100px;  
 }
