@@ -146,11 +146,6 @@ BobaBoyApp = {
       this.boy.onPlatform = false
     }
   },
-
-  renderBobaBoy: function(){
-    this.boy.element.style.left = this.boy.x_pos + "px";
-    this.boy.element.style.top = this.boy.y_pos + "px";
-  }
 }
 
 BobaBoyApp.init();
