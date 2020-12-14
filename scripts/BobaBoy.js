@@ -110,8 +110,8 @@ BobaBoyApp = {
             //only make velocity decrease when the velocity is positive
             //this makes it so that when the player releases jump key, bobaboy will start to fall.
             //gives player more control over jump.
-            BobaBoyApp.boy.y_vel = BobaBoyApp.boy.y_vel - 8
-            //making the value "8" higher makes it harder to jump, but more control.
+            BobaBoyApp.boy.y_vel = BobaBoyApp.boy.y_vel - BobaBoyApp.boy.y_vel * 0.7
+            //making the value "0.7" higher makes it harder to jump, but more control.
             //8 seems like a good integer to use for a natural jump.
           }
         }
