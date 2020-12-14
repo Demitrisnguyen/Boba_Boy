@@ -6,11 +6,14 @@ BobaBoyApp = {
 
   boy: null,
 
+  platarr: [],
+
   init: function () {
     this.createBobaBoy()
-    this.createObstacles()
+    this.createPlatforms()
     this.startGame()
     this.movement()
+    
   },
 
   createBobaBoy: function () {
@@ -34,13 +37,7 @@ BobaBoyApp = {
   },
 
   createObstacles: function () {
-    let platformdiv = document.createElement("div");
-    platformdiv.className = "platform";
-    this.container.append(platformdiv);
-    let platform = {
-      element: platformdiv,
-    }
-    return platform
+   
   },
 
   createHearts: function () {
@@ -52,7 +49,17 @@ BobaBoyApp = {
   },
 
   createPlatforms: function () {
-
+    let platformdiv = document.createElement("div");
+    platformdiv.className = "platform";
+    this.container.append(platformdiv);
+    let platform = {
+      element: platformdiv,
+      x_pos: 100,
+      y_pos: 400,
+      x_length: 100,
+      y_length: 10,
+    }
+    BobaBoyApp.platarr.push(platform)
   },
 
   animate: function () {
