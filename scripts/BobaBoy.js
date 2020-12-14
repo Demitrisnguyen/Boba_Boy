@@ -83,16 +83,16 @@ BobaBoyApp = {
     //key code of space bar is 32, w: 87, up key: 38
     window.onkeydown = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
-        BobaBoyApp.boy.x_vel = 5
+        BobaBoyApp.boy.x_vel = 6
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
-        BobaBoyApp.boy.x_vel = -5
+        BobaBoyApp.boy.x_vel = -6
       }
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         //can only jump when he is on a platform. in this case: the ground
         //may have to make different scenarios for platforms we add in.
         if (BobaBoyApp.boy.onPlatform == true) {
-          BobaBoyApp.boy.y_vel = 20
+          BobaBoyApp.boy.y_vel = 16
         }
       }
     }
