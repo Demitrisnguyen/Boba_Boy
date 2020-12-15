@@ -105,7 +105,7 @@ BobaBoyApp = {
         //can only jump when he is on a platform. in this case: the ground
         //may have to make different scenarios for platforms we add in.
         if (BobaBoyApp.boy.onPlatform == true) {
-          BobaBoyApp.boy.y_vel = 16
+          BobaBoyApp.boy.y_vel = 11
         }
       }
     }
@@ -137,7 +137,7 @@ BobaBoyApp = {
     if(this.boy.onPlatform == true){
 
     }
-    return this.boy.y_vel = this.boy.y_vel - 1;
+    return this.boy.y_vel = this.boy.y_vel - 0.5;
   },
 
   moveBobaBoy: function () {
@@ -170,11 +170,15 @@ BobaBoyApp = {
         this.boy.y_vel = 0;
         this.boy.y_pos = this.platarr[i].y_pos - 20
         this.boy.onPlatform = true;
-        console.log("Collision");
       }
-    }
+      if (this.boy.y_pos - 10 <= this.platarr[i].y_pos + 10 && this.boy.y_pos - 10 >= this.platarr[i].y_pos && this.boy.x_pos +15 >= this.platarr[i].x_pos && this.boy.x_pos +10 <= this.platarr[i].x_pos + 100) {
+        this.boy.y_vel = 0;
+      }
+      //make a better collision function.
+      if(this.boy.y_pos >= this.platarr[i].y_pos - 10 && this.boy.y_pos <= this.platarr[i].y_pos && this.boy.x_pos + 15 >= this.platarr[i].x_pos && this.boy.x_pos - 10 <= this.platarr[i].x_pos + 100)
+        this.boy.x_vel = 0;
+      }
     
-
   },
 }
 
