@@ -6,24 +6,28 @@ BobaBoyApp = {
 
   boy: null,
 
-  platarr: [],
+  platforms: [],
 
-  Level1: {
-    
-  },
+  Levels: [],
+  
+  obstacles: [],
+
+  
 
   init: function () {
     this.createBobaBoy()
     this.startGame()
     this.movement()
     
+    
     for(let i = 0; i < 2; i++){
-      BobaBoyApp.platarr.push(this.createPlatforms())
+      BobaBoyApp.platforms.push(this.createPlatforms())
     }
-    this.platarr[0].x_pos = 100
-    this.platarr[0].y_pos = 400
-    this.platarr[1].x_pos = 200
-    this.platarr[1].y_pos = 300
+    this.platforms[0].x_pos = 100
+    this.platforms[0].y_pos = 400
+    this.platforms[1].x_pos = 200
+    this.platforms[1].y_pos = 300
+    this.createObstacles()
   },
 
   createlevel: function(){},
@@ -39,6 +43,7 @@ BobaBoyApp = {
       x_vel: 0,
       y_vel: 0,
       onPlatform: false,
+      obstacleCollision: false,
       element: bobaboydiv,
     }
     BobaBoyApp.boy = Boy
@@ -47,9 +52,19 @@ BobaBoyApp = {
   startGame: function () {
     this.simulation = setInterval(this.animate.bind(BobaBoyApp), 25)
   },
-
+ 
   createObstacles: function () {
-   
+   let obstaclediv = document.createElement("div");
+   obstaclediv.className = "obstacle";
+   this.container.append(obstaclediv);
+   let obstacle = {
+     radius: 15,
+     x_pos: 10,
+     y_pos: 480,
+     x_vel: 0,
+     y_vel: 0,
+   }
+   return obstacle
   },
 
   createHearts: function () {
@@ -157,9 +172,9 @@ BobaBoyApp = {
   renderBobaBoy: function () {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
-    for (let i = 0; i < this.platarr.length; i++) {
-      this.platarr[i].element.style.left = this.platarr[i].x_pos + "px";
-      this.platarr[i].element.style.top = this.platarr[i].y_pos + "px";
+    for (let i = 0; i < this.platforms.length; i++) {
+      this.platforms[i].element.style.left = this.platforms[i].x_pos + "px";
+      this.platforms[i].element.style.top = this.platforms[i].y_pos + "px";
     }
   },
 
@@ -171,17 +186,17 @@ BobaBoyApp = {
     else {
       this.boy.onPlatform = false
     }
-    for (let i = 0; i < this.platarr.length; i++) {
-      if (this.boy.y_pos + 10 >= this.platarr[i].y_pos - 10 && this.boy.y_pos + 10 <= this.platarr[i].y_pos && this.boy.x_pos +15 >= this.platarr[i].x_pos && this.boy.x_pos +10 <= this.platarr[i].x_pos + 100) {
+    for (let i = 0; i < this.platforms.length; i++) {
+      if (this.boy.y_pos + 10 >= this.platforms[i].y_pos - 10 && this.boy.y_pos + 10 <= this.platforms[i].y_pos && this.boy.x_pos +15 >= this.platforms[i].x_pos && this.boy.x_pos +10 <= this.platforms[i].x_pos + 100) {
         this.boy.y_vel = 0;
-        this.boy.y_pos = this.platarr[i].y_pos - 20
+        this.boy.y_pos = this.platforms[i].y_pos - 20
         this.boy.onPlatform = true;
       }
-      if (this.boy.y_pos - 10 <= this.platarr[i].y_pos + 10 && this.boy.y_pos - 10 >= this.platarr[i].y_pos && this.boy.x_pos +15 >= this.platarr[i].x_pos && this.boy.x_pos +10 <= this.platarr[i].x_pos + 100) {
+      if (this.boy.y_pos - 10 <= this.platforms[i].y_pos + 10 && this.boy.y_pos - 10 >= this.platforms[i].y_pos && this.boy.x_pos +15 >= this.platforms[i].x_pos && this.boy.x_pos +10 <= this.platforms[i].x_pos + 100) {
         this.boy.y_vel = 0;
       }
       //make a better collision function. circle rectangel collision.
-      if(this.boy.y_pos >= this.platarr[i].y_pos - 10 && this.boy.y_pos <= this.platarr[i].y_pos && this.boy.x_pos + 15 >= this.platarr[i].x_pos && this.boy.x_pos - 10 <= this.platarr[i].x_pos + 100)
+      if(this.boy.y_pos >= this.platforms[i].y_pos - 10 && this.boy.y_pos <= this.platforms[i].y_pos && this.boy.x_pos + 15 >= this.platforms[i].x_pos && this.boy.x_pos - 10 <= this.platforms[i].x_pos + 100)
         this.boy.x_vel = 0;
       }
     
