@@ -9,7 +9,7 @@ BobaBoyApp = {
   platarr: [],
 
   Level1: {
-    
+
   },
 
   init: function () {
@@ -78,6 +78,7 @@ BobaBoyApp = {
     this.moveBobaBoy()
     this.renderBobaBoy()
     this.determinePlatform()
+    this.collision()
   },
 
   startLevel: function () {
@@ -95,6 +96,18 @@ BobaBoyApp = {
   collision: function () {
     //decide if this is going to be the player checking for collisions with objects
     // or the objects checking for collisions with the player.
+    for(let i = 0; i < this.platarr.length; i++){
+      let x_point = this.clamp(this.platarr[i].x_pos, this.platarr[i].x_pos + 100, this.boy.x_pos)
+      let y_point = this.clamp(this.platarr[i].y_pos, this.platarr[i].y_pos + 10, this.boy.y_pos)
+      
+      let distance = Math.sqrt((x_point - this.boy.x_pos)*(x_point - this.boy.x_pos) + (y_point - this.boy.y_pos)*(y_point - this.boy.y_pos))
+
+      if(distance <= this.boy.radius){
+        console.log("collision!")
+        //!!!!!!!
+      }
+  
+      }
   },
 
   movement: function () {
@@ -171,21 +184,21 @@ BobaBoyApp = {
     else {
       this.boy.onPlatform = false
     }
-    for (let i = 0; i < this.platarr.length; i++) {
-      if (this.boy.y_pos + 10 >= this.platarr[i].y_pos - 10 && this.boy.y_pos + 10 <= this.platarr[i].y_pos && this.boy.x_pos +15 >= this.platarr[i].x_pos && this.boy.x_pos +10 <= this.platarr[i].x_pos + 100) {
-        this.boy.y_vel = 0;
-        this.boy.y_pos = this.platarr[i].y_pos - 20
-        this.boy.onPlatform = true;
-      }
-      if (this.boy.y_pos - 10 <= this.platarr[i].y_pos + 10 && this.boy.y_pos - 10 >= this.platarr[i].y_pos && this.boy.x_pos +15 >= this.platarr[i].x_pos && this.boy.x_pos +10 <= this.platarr[i].x_pos + 100) {
-        this.boy.y_vel = 0;
-      }
-      //make a better collision function. circle rectangel collision.
-      if(this.boy.y_pos >= this.platarr[i].y_pos - 10 && this.boy.y_pos <= this.platarr[i].y_pos && this.boy.x_pos + 15 >= this.platarr[i].x_pos && this.boy.x_pos - 10 <= this.platarr[i].x_pos + 100)
-        this.boy.x_vel = 0;
-      }
     
   },
+
+    clamp: function (min, max, pos) {
+      if(pos < min){
+        return min;
+      }
+      else if (pos > max){
+        return max;
+      }
+      else{
+        return pos;
+      }
+    }
+
 }
 
 BobaBoyApp.init();
