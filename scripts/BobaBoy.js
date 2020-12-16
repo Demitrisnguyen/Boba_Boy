@@ -8,6 +8,10 @@ BobaBoyApp = {
 
   platarr: [],
 
+  Level1: {
+    
+  },
+
   init: function () {
     this.createBobaBoy()
     this.startGame()
@@ -21,6 +25,8 @@ BobaBoyApp = {
     this.platarr[1].x_pos = 200
     this.platarr[1].y_pos = 300
   },
+
+  createlevel: function(){},
 
   createBobaBoy: function () {
     let bobaboydiv = document.createElement("div");
@@ -174,7 +180,7 @@ BobaBoyApp = {
       if (this.boy.y_pos - 10 <= this.platarr[i].y_pos + 10 && this.boy.y_pos - 10 >= this.platarr[i].y_pos && this.boy.x_pos +15 >= this.platarr[i].x_pos && this.boy.x_pos +10 <= this.platarr[i].x_pos + 100) {
         this.boy.y_vel = 0;
       }
-      //make a better collision function.
+      //make a better collision function. circle rectangel collision.
       if(this.boy.y_pos >= this.platarr[i].y_pos - 10 && this.boy.y_pos <= this.platarr[i].y_pos && this.boy.x_pos + 15 >= this.platarr[i].x_pos && this.boy.x_pos - 10 <= this.platarr[i].x_pos + 100)
         this.boy.x_vel = 0;
       }
