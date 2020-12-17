@@ -19,7 +19,6 @@ BobaBoyApp = {
     this.startGame()
     this.movement()
     
-    
     for(let i = 0; i < 2; i++){
       BobaBoyApp.platforms.push(this.createPlatforms())
     }
@@ -27,7 +26,10 @@ BobaBoyApp = {
     this.platforms[0].y_pos = 400
     this.platforms[1].x_pos = 200
     this.platforms[1].y_pos = 300
-    this.createObstacles()
+
+    for(let i = 0; i < 1; i++){
+    BobaBoyApp.obstacles.push(this.createObstacles())
+    }
   },
 
   createlevel: function(){},
@@ -64,9 +66,10 @@ BobaBoyApp = {
      x_pos: 10,
      y_pos: 480,
      x_vel: 0,
-     y_vel: 5,
+     y_vel: -5,
      x_max: 100,
      y_max: 100,
+     element: obstaclediv
    }
    return obstacle
   },
@@ -95,6 +98,7 @@ BobaBoyApp = {
 
   animate: function () {
     this.moveBobaBoy()
+    this.moveObstacles()
     this.renderBobaBoy()
     this.determinePlatform()
     this.collision()
@@ -211,11 +215,15 @@ BobaBoyApp = {
     if (this.boy.y_pos > 480) {
       this.boy.y_pos = 480
     }
+  },
+
+  moveObstacles: function(){
     for (let i = 0; i < this.obstacles.length; i++){
-      this.obstacle.x_pos = this.obstacle.x_pos + this.obstacle.x_vel
-      this.obstacle.y_pos = this.obstacle.y_pos - this.obstacle.y_vel
+      this.obstacles[i].x_pos = this.obstacles[i].x_pos + this.obstacles[i].x_vel
+      this.obstacles[i].y_pos = this.obstacles[i].y_pos + this.obstacles[i].y_vel
     }
   },
+
   renderBobaBoy: function () {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
@@ -224,8 +232,8 @@ BobaBoyApp = {
       this.platforms[i].element.style.top = this.platforms[i].y_pos + 10 + "px";
     }
     for (let i = 0; i < this.obstacles.length; i++) {
-      this.obstacle[i].element.style.left = this.obstacle[i].x_pos + "px";
-      this.obstacle[i].element.style.top = this.obstacle[i].y_pos + "px";
+      this.obstacles[i].element.style.left = this.obstacles[i].x_pos + "px";
+      this.obstacles[i].element.style.top = this.obstacles[i].y_pos + "px";
     }
   },
 

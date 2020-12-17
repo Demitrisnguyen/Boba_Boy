@@ -39,7 +39,7 @@ body {
   width: 100px;
   background-color: tan;
   border: 2px solid green;
-  position:absolute;
+  position: absolute;
 }
 .obstacle {
   height:20px;
