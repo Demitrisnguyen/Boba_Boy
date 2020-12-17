@@ -64,7 +64,9 @@ BobaBoyApp = {
      x_pos: 10,
      y_pos: 480,
      x_vel: 0,
-     y_vel: 0,
+     y_vel: 5,
+     x_max: 100,
+     y_max: 100,
    }
    return obstacle
   },
@@ -188,14 +190,21 @@ BobaBoyApp = {
     if (this.boy.y_pos > 480) {
       this.boy.y_pos = 480
     }
+    for (let i = 0; i < this.obstacles.length; i++){
+      this.obstacle.x_pos = this.obstacle.x_pos + this.obstacle.x_vel
+      this.obstacle.y_pos = this.obstacle.y_pos - this.obstacle.y_vel
+    }
   },
-
   renderBobaBoy: function () {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
     for (let i = 0; i < this.platforms.length; i++) {
       this.platforms[i].element.style.left = this.platforms[i].x_pos + 10 + "px";
       this.platforms[i].element.style.top = this.platforms[i].y_pos + 10 + "px";
+    }
+    for (let i = 0; i < this.obstacles.length; i++) {
+      this.obstacle[i].element.style.left = this.obstacle[i].x_pos + "px";
+      this.obstacle[i].element.style.top = this.obstacle[i].y_pos + "px";
     }
   },
 
