@@ -6,24 +6,28 @@ BobaBoyApp = {
 
   boy: null,
 
-  platarr: [],
+  platforms: [],
 
-  Level1: {
+  Levels: [],
+  
+  obstacles: [],
 
-  },
+  
 
   init: function () {
     this.createBobaBoy()
     this.startGame()
     this.movement()
     
+    
     for(let i = 0; i < 2; i++){
-      BobaBoyApp.platarr.push(this.createPlatforms())
+      BobaBoyApp.platforms.push(this.createPlatforms())
     }
-    this.platarr[0].x_pos = 100
-    this.platarr[0].y_pos = 400
-    this.platarr[1].x_pos = 200
-    this.platarr[1].y_pos = 300
+    this.platforms[0].x_pos = 100
+    this.platforms[0].y_pos = 400
+    this.platforms[1].x_pos = 200
+    this.platforms[1].y_pos = 300
+    this.createObstacles()
   },
 
   createlevel: function(){},
@@ -41,6 +45,7 @@ BobaBoyApp = {
       x_vel: 0,
       y_vel: 0,
       onPlatform: false,
+      obstacleCollision: false,
       element: bobaboydiv,
     }
     BobaBoyApp.boy = Boy
@@ -49,9 +54,19 @@ BobaBoyApp = {
   startGame: function () {
     this.simulation = setInterval(this.animate.bind(BobaBoyApp), 25)
   },
-
+ 
   createObstacles: function () {
-   
+   let obstaclediv = document.createElement("div");
+   obstaclediv.className = "obstacle";
+   this.container.append(obstaclediv);
+   let obstacle = {
+     radius: 15,
+     x_pos: 10,
+     y_pos: 480,
+     x_vel: 0,
+     y_vel: 0,
+   }
+   return obstacle
   },
 
   createHearts: function () {
@@ -98,17 +113,17 @@ BobaBoyApp = {
   collision: function () {
     //decide if this is going to be the player checking for collisions with objects
     // or the objects checking for collisions with the player.
-    for (let i = 0; i < this.platarr.length; i++) {
-      let x_point = this.clamp(this.platarr[i].x_pos, this.platarr[i].x_pos + 100, this.boy.x_pos)
-      let y_point = this.clamp(this.platarr[i].y_pos, this.platarr[i].y_pos + 10, this.boy.y_pos)
+    for (let i = 0; i < this.platforms.length; i++) {
+      let x_point = this.clamp(this.platforms[i].x_pos, this.platforms[i].x_pos + 100, this.boy.x_pos)
+      let y_point = this.clamp(this.platforms[i].y_pos, this.platforms[i].y_pos + 10, this.boy.y_pos)
 
       let distance = Math.sqrt((x_point - this.boy.x_pos) * (x_point - this.boy.x_pos) + (y_point - this.boy.y_pos) * (y_point - this.boy.y_pos))
       
       if (distance <= this.boy.radius) {
-        if (this.boy.y_pos <= this.platarr[i].y_pos) {
+        if (this.boy.y_pos <= this.platforms[i].y_pos) {
           this.boy.onPlatform = true;
           this.boy.y_vel = 0;
-          this.boy.y_pos = this.platarr[i].y_pos - 10
+          this.boy.y_pos = this.platforms[i].y_pos - 10
           //console.log("top")
         }
       }
@@ -178,9 +193,9 @@ BobaBoyApp = {
   renderBobaBoy: function () {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
-    for (let i = 0; i < this.platarr.length; i++) {
-      this.platarr[i].element.style.left = this.platarr[i].x_pos + 10 + "px";
-      this.platarr[i].element.style.top = this.platarr[i].y_pos + 10 + "px";
+    for (let i = 0; i < this.platforms.length; i++) {
+      this.platforms[i].element.style.left = this.platforms[i].x_pos + 10 + "px";
+      this.platforms[i].element.style.top = this.platforms[i].y_pos + 10 + "px";
     }
   },
 
