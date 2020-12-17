@@ -126,9 +126,30 @@ BobaBoyApp = {
           this.boy.y_pos = this.platforms[i].y_pos - 10
           //console.log("top")
         }
+        else if(this.boy.y_pos >= this.platforms[i].y_pos && this.boy.y_vel > 0){
+          this.boy.y_vel = 0
+          this.boy.y_pos = this.platforms[i].y_pos + 20
+        }
+        else if(this.boy.x_pos + 10 >= this.platforms[i].x_pos && this.boy.x_pos + 10 < this.platforms[i].x_pos + 5){
+          this.boy.x_vel = 0
+        }
+        else if(this.boy.x_pos - 10 <= this.platforms[i].x_pos + 110 && this.boy.x_pos - 10 > this.platforms[i].x_pos + 95){
+          this.boy.x_vel = 0
+          this.boy.x_pos = this.platforms[i].x_pos + 110
+        }
+        else{
+          if(this.boy.x_pos <= this.platforms[i].x_pos)
+          this.boy.x_pos = x_point - 10
+          this.boy.x_vel = 0
+          this.boy.y_vel = 0
+          if(this.boy.x_pos >= this.platforms[i].x_pos + 105)
+          this.boy.x_pos = x_point + 15
+          this.boy.y_vel = 0
+          this.boy.x_vel = 0
+        }
+        }
       }
 
-    }
   },
 
   movement: function () {
