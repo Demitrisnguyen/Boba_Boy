@@ -34,8 +34,10 @@ BobaBoyApp = {
     this.container.append(bobaboydiv);
     let Boy = {
       radius: 10,
-      x_pos: 10,
-      y_pos: 480,
+      x_pos: 10 + 10,
+      //left side of the circle + the radius = center
+      y_pos: 480 + 10,
+      //top of the circle + radius = center
       x_vel: 0,
       y_vel: 0,
       onPlatform: false,
@@ -96,18 +98,22 @@ BobaBoyApp = {
   collision: function () {
     //decide if this is going to be the player checking for collisions with objects
     // or the objects checking for collisions with the player.
-    for(let i = 0; i < this.platarr.length; i++){
+    for (let i = 0; i < this.platarr.length; i++) {
       let x_point = this.clamp(this.platarr[i].x_pos, this.platarr[i].x_pos + 100, this.boy.x_pos)
       let y_point = this.clamp(this.platarr[i].y_pos, this.platarr[i].y_pos + 10, this.boy.y_pos)
-      
-      let distance = Math.sqrt((x_point - this.boy.x_pos)*(x_point - this.boy.x_pos) + (y_point - this.boy.y_pos)*(y_point - this.boy.y_pos))
 
-      if(distance <= this.boy.radius){
-        console.log("collision!")
-        //!!!!!!!
+      let distance = Math.sqrt((x_point - this.boy.x_pos) * (x_point - this.boy.x_pos) + (y_point - this.boy.y_pos) * (y_point - this.boy.y_pos))
+      
+      if (distance <= this.boy.radius) {
+        if (this.boy.y_pos <= this.platarr[i].y_pos) {
+          this.boy.onPlatform = true;
+          this.boy.y_vel = 0;
+          this.boy.y_pos = this.platarr[i].y_pos - 10
+          //console.log("top")
+        }
       }
-  
-      }
+
+    }
   },
 
   movement: function () {
@@ -154,9 +160,11 @@ BobaBoyApp = {
   calculateVelocity: function () {
     //calculated velocity here, factoring in gravity.
     if(this.boy.onPlatform == true){
-
+      return this.boy.y_vel = this.boy.y_vel
     }
-    return this.boy.y_vel = this.boy.y_vel - 0.5;
+    else{
+      return this.boy.y_vel = this.boy.y_vel - 0.5;
+    }
   },
 
   moveBobaBoy: function () {
@@ -171,8 +179,8 @@ BobaBoyApp = {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
     for (let i = 0; i < this.platarr.length; i++) {
-      this.platarr[i].element.style.left = this.platarr[i].x_pos + "px";
-      this.platarr[i].element.style.top = this.platarr[i].y_pos + "px";
+      this.platarr[i].element.style.left = this.platarr[i].x_pos + 10 + "px";
+      this.platarr[i].element.style.top = this.platarr[i].y_pos + 10 + "px";
     }
   },
 
