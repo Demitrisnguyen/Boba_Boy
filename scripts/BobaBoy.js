@@ -19,13 +19,15 @@ BobaBoyApp = {
     this.startGame()
     this.movement()
     
-    for(let i = 0; i < 2; i++){
+    for(let i = 0; i < 4; i++){
       BobaBoyApp.platforms.push(this.createPlatforms())
     }
-    this.platforms[0].x_pos = 100
-    this.platforms[0].y_pos = 400
     this.platforms[1].x_pos = 200
-    this.platforms[1].y_pos = 300
+    this.platforms[1].y_pos = 270
+    this.platforms[2].x_pos = 0
+    this.platforms[2].y_pos = 140
+    this.platforms[3].x_pos = 400
+    this.platforms[3].y_pos = 170
 
     for(let i = 0; i < 1; i++){
     BobaBoyApp.obstacles.push(this.createObstacles())
@@ -63,8 +65,8 @@ BobaBoyApp = {
    this.container.append(obstaclediv);
    let obstacle = {
      radius: 15,
-     x_pos: 10,
-     y_pos: 480,
+     x_pos: 110,
+     y_pos: 400,
      x_vel: 0,
      y_vel: -5,
      x_max: 100,
