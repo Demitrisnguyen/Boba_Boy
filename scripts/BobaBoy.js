@@ -119,8 +119,7 @@ BobaBoyApp = {
   },
 
   collision: function () {
-    //decide if this is going to be the player checking for collisions with objects
-    // or the objects checking for collisions with the player.
+
     for (let i = 0; i < this.platforms.length; i++) {
       let x_point = this.clamp(this.platforms[i].x_pos, this.platforms[i].x_pos + 100, this.boy.x_pos)
       let y_point = this.clamp(this.platforms[i].y_pos, this.platforms[i].y_pos + 10, this.boy.y_pos)
