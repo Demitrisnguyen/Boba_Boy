@@ -39,7 +39,7 @@ BobaBoyApp = {
     for (let i = 0; i < this.platforms.length; i++) {
       //
       this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
-      this.boba[i].y_pos = this.platforms[i].y_pos
+      this.boba[i].y_pos = this.platforms[i].y_pos - 15
     }
   },
 
@@ -256,7 +256,7 @@ BobaBoyApp = {
     }
     for (let i = 0; i < this.boba.length; i++) {
       this.boba[i].element.style.left = this.boba[i].x_pos + this.boba[i].radius + "px";
-      this.boba[i].element.style.top = this.boba[i].y_pos - this.boba[i].radius + "px";
+      this.boba[i].element.style.top = this.boba[i].y_pos + this.boba[i].radius + "px";
     }
   },
 
