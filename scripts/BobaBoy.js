@@ -9,17 +9,17 @@ BobaBoyApp = {
   platforms: [],
 
   Levels: [],
-  
+
   obstacles: [],
 
-  
+  boba: [],
 
   init: function () {
     this.createBobaBoy()
     this.startGame()
     this.movement()
-    
-    for(let i = 0; i < 4; i++){
+
+    for (let i = 0; i < 4; i++) {
       BobaBoyApp.platforms.push(this.createPlatforms())
     }
     this.platforms[1].x_pos = 200
@@ -29,12 +29,21 @@ BobaBoyApp = {
     this.platforms[3].x_pos = 400
     this.platforms[3].y_pos = 170
 
-    for(let i = 0; i < 1; i++){
-    BobaBoyApp.obstacles.push(this.createObstacles())
+    for (let i = 0; i < 1; i++) {
+      BobaBoyApp.obstacles.push(this.createObstacles())
+    }
+
+    for (let i = 0; i < this.platforms.length; i++) {
+      BobaBoyApp.boba.push(this.createBoba())
+    }
+    for (let i = 0; i < this.platforms.length; i++) {
+      //
+      this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
+      this.boba[i].y_pos = this.platforms[i].y_pos
     }
   },
 
-  createlevel: function(){},
+  createlevel: function () { },
 
   createBobaBoy: function () {
     let bobaboydiv = document.createElement("div");
@@ -58,22 +67,22 @@ BobaBoyApp = {
   startGame: function () {
     this.simulation = setInterval(this.animate.bind(BobaBoyApp), 25)
   },
- 
+
   createObstacles: function () {
-   let obstaclediv = document.createElement("div");
-   obstaclediv.className = "obstacle";
-   this.container.append(obstaclediv);
-   let obstacle = {
-     radius: 15,
-     x_pos: 110,
-     y_pos: 400,
-     x_vel: 0,
-     y_vel: -5,
-     x_max: 100,
-     y_max: 100,
-     element: obstaclediv
-   }
-   return obstacle
+    let obstaclediv = document.createElement("div");
+    obstaclediv.className = "obstacle";
+    this.container.append(obstaclediv);
+    let obstacle = {
+      radius: 15,
+      x_pos: 110,
+      y_pos: 400,
+      x_vel: 0,
+      y_vel: -5,
+      x_max: 100,
+      y_max: 100,
+      element: obstaclediv
+    }
+    return obstacle
   },
 
   createHearts: function () {
@@ -81,7 +90,16 @@ BobaBoyApp = {
   },
 
   createBoba: function () {
-
+    let bobadiv = document.createElement("div");
+    bobadiv.className = "boba";
+    this.container.append(bobadiv);
+    let boba = {
+      radius: 5,
+      x_pos: 0,
+      y_pos: 0,
+      element: bobadiv
+    }
+    return boba
   },
 
   createPlatforms: function () {
@@ -125,7 +143,7 @@ BobaBoyApp = {
       let y_point = this.clamp(this.platforms[i].y_pos, this.platforms[i].y_pos + 10, this.boy.y_pos)
 
       let distance = Math.sqrt((x_point - this.boy.x_pos) * (x_point - this.boy.x_pos) + (y_point - this.boy.y_pos) * (y_point - this.boy.y_pos))
-      
+
       if (distance <= this.boy.radius) {
         if (this.boy.y_pos <= this.platforms[i].y_pos) {
           this.boy.onPlatform = true;
@@ -133,29 +151,29 @@ BobaBoyApp = {
           this.boy.y_pos = this.platforms[i].y_pos - 10
           //console.log("top")
         }
-        else if(this.boy.y_pos >= this.platforms[i].y_pos && this.boy.y_vel > 0){
+        else if (this.boy.y_pos >= this.platforms[i].y_pos && this.boy.y_vel > 0) {
           this.boy.y_vel = 0
           this.boy.y_pos = this.platforms[i].y_pos + 20
         }
-        else if(this.boy.x_pos + 10 >= this.platforms[i].x_pos && this.boy.x_pos + 10 < this.platforms[i].x_pos + 5){
+        else if (this.boy.x_pos + 10 >= this.platforms[i].x_pos && this.boy.x_pos + 10 < this.platforms[i].x_pos + 5) {
           this.boy.x_vel = 0
         }
-        else if(this.boy.x_pos - 10 <= this.platforms[i].x_pos + 110 && this.boy.x_pos - 10 > this.platforms[i].x_pos + 95){
+        else if (this.boy.x_pos - 10 <= this.platforms[i].x_pos + 110 && this.boy.x_pos - 10 > this.platforms[i].x_pos + 95) {
           this.boy.x_vel = 0
           this.boy.x_pos = this.platforms[i].x_pos + 110
         }
-        else{
-          if(this.boy.x_pos <= this.platforms[i].x_pos)
-          this.boy.x_pos = x_point - 10
+        else {
+          if (this.boy.x_pos <= this.platforms[i].x_pos)
+            this.boy.x_pos = x_point - 10
           this.boy.x_vel = 0
           this.boy.y_vel = 0
-          if(this.boy.x_pos >= this.platforms[i].x_pos + 105)
-          this.boy.x_pos = x_point + 15
+          if (this.boy.x_pos >= this.platforms[i].x_pos + 105)
+            this.boy.x_pos = x_point + 15
           this.boy.y_vel = 0
           this.boy.x_vel = 0
-        }
         }
       }
+    }
 
   },
 
@@ -202,10 +220,10 @@ BobaBoyApp = {
 
   calculateVelocity: function () {
     //calculated velocity here, factoring in gravity.
-    if(this.boy.onPlatform == true){
+    if (this.boy.onPlatform == true) {
       return this.boy.y_vel = this.boy.y_vel
     }
-    else{
+    else {
       return this.boy.y_vel = this.boy.y_vel - 0.5;
     }
   },
@@ -218,8 +236,8 @@ BobaBoyApp = {
     }
   },
 
-  moveObstacles: function(){
-    for (let i = 0; i < this.obstacles.length; i++){
+  moveObstacles: function () {
+    for (let i = 0; i < this.obstacles.length; i++) {
       this.obstacles[i].x_pos = this.obstacles[i].x_pos + this.obstacles[i].x_vel
       this.obstacles[i].y_pos = this.obstacles[i].y_pos + this.obstacles[i].y_vel
     }
@@ -236,6 +254,10 @@ BobaBoyApp = {
       this.obstacles[i].element.style.left = this.obstacles[i].x_pos + "px";
       this.obstacles[i].element.style.top = this.obstacles[i].y_pos + "px";
     }
+    for (let i = 0; i < this.boba.length; i++) {
+      this.boba[i].element.style.left = this.boba[i].x_pos + this.boba[i].radius + "px";
+      this.boba[i].element.style.top = this.boba[i].y_pos - this.boba[i].radius + "px";
+    }
   },
 
   determinePlatform: function () {
@@ -246,20 +268,20 @@ BobaBoyApp = {
     else {
       this.boy.onPlatform = false
     }
-    
+
   },
 
-    clamp: function (min, max, pos) {
-      if(pos < min){
-        return min;
-      }
-      else if (pos > max){
-        return max;
-      }
-      else{
-        return pos;
-      }
+  clamp: function (min, max, pos) {
+    if (pos < min) {
+      return min;
     }
+    else if (pos > max) {
+      return max;
+    }
+    else {
+      return pos;
+    }
+  }
 
 }
 

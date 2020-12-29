@@ -50,3 +50,12 @@ body {
   top: 300px;
   left: 200px;
 }
+
+.boba {
+  height: 10px;
+    width: 10px;
+    background-color: black;
+    border: 1px solid brown;
+    border-radius: 5px;
+    position: absolute;
+}
