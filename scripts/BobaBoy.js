@@ -51,14 +51,15 @@ BobaBoyApp = {
     this.container.append(bobaboydiv);
     let Boy = {
       radius: 10,
-      x_pos: 10 + 10,
+      x_pos: 10,
       //left side of the circle + the radius = center
-      y_pos: 480 + 10,
+      y_pos: 480,
       //top of the circle + radius = center
       x_vel: 0,
       y_vel: 0,
       onPlatform: false,
       obstacleCollision: false,
+      bobascollected: 0,
       element: bobaboydiv,
     }
     BobaBoyApp.boy = Boy
@@ -172,6 +173,24 @@ BobaBoyApp = {
           this.boy.y_vel = 0
           this.boy.x_vel = 0
         }
+      }
+    }
+
+    for (let i = 0; i < this.boba.length; i++) {
+      let x_dif = (this.boy.x_pos + this.boy.radius - (this.boba[i].x_pos + this.boba[i].radius))
+      let y_dif = (this.boy.y_pos + this.boy.radius - (this.boba[i].y_pos + this.boba[i].radius))
+      let dist = Math.sqrt(x_dif*x_dif + y_dif*y_dif)
+      
+      if(dist <= this.boy.radius + this.boba[i].radius){
+        //console.log("collision")
+        //this.boba.splice(i,i)
+        //dont know if this ^ is needed. Removing the element from the array...
+        //...messes the "removeChild" code down below. (makes it delete wrong element.)
+        this.boba[i].x_pos = null
+        this.boba[i].y_pos = null
+        this.container.removeChild(this.boba[i].element)
+        this.boy.bobascollected = this.boy.bobascollected + 1
+        console.log("boba balls:", this.boy.bobascollected)
       }
     }
 
