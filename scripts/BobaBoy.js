@@ -60,6 +60,7 @@ BobaBoyApp = {
       onPlatform: false,
       obstacleCollision: false,
       bobascollected: 0,
+      lives: 3,
       element: bobaboydiv,
     }
     BobaBoyApp.boy = Boy
