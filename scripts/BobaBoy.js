@@ -14,20 +14,30 @@ BobaBoyApp = {
 
   boba: [],
 
+  goal: {
+
+  },
+
   init: function () {
     this.createBobaBoy()
+
+    let pic = document.createElement("img");
+    pic.setAttribute("src", "images/boba.png");
+    pic.setAttribute("height", "20");
+    pic.setAttribute("width", "20");
+    this.boy.element.appendChild(pic);
+
     this.startGame()
     this.movement()
 
     for (let i = 0; i < 4; i++) {
       BobaBoyApp.platforms.push(this.createPlatforms())
     }
-    this.platforms[1].x_pos = 200
-    this.platforms[1].y_pos = 270
-    this.platforms[2].x_pos = 0
-    this.platforms[2].y_pos = 140
-    this.platforms[3].x_pos = 400
-    this.platforms[3].y_pos = 170
+    for (let i = 0; i < 4; i++) {
+      this.platforms[i].x_pos = Math.random()*30 + 100 + i*100
+      this.platforms[i].y_pos = Math.random()*60 + 400 - i*100
+    }
+    
 
     for (let i = 0; i < 1; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
@@ -37,7 +47,6 @@ BobaBoyApp = {
       BobaBoyApp.boba.push(this.createBoba())
     }
     for (let i = 0; i < this.platforms.length; i++) {
-      //
       this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
       this.boba[i].y_pos = this.platforms[i].y_pos - 15
     }
@@ -110,8 +119,8 @@ BobaBoyApp = {
     this.container.append(platformdiv);
     let platform = {
       element: platformdiv,
-      x_pos: 100,
-      y_pos: 390,
+      x_pos: Math.random()*30 + 100,
+      y_pos: Math.random()*60 + 400,
       x_length: 100,
       y_length: 10,
     }
@@ -202,16 +211,16 @@ BobaBoyApp = {
     //key code of space bar is 32, w: 87, up key: 38
     window.onkeydown = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
-        BobaBoyApp.boy.x_vel = 6
+        BobaBoyApp.boy.x_vel = 4
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
-        BobaBoyApp.boy.x_vel = -6
+        BobaBoyApp.boy.x_vel = -4
       }
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         //can only jump when he is on a platform. in this case: the ground
         //may have to make different scenarios for platforms we add in.
         if (BobaBoyApp.boy.onPlatform == true) {
-          BobaBoyApp.boy.y_vel = 11
+          BobaBoyApp.boy.y_vel = 12.1
         }
       }
     }
@@ -266,6 +275,7 @@ BobaBoyApp = {
   renderBobaBoy: function () {
     this.boy.element.style.left = this.boy.x_pos + "px";
     this.boy.element.style.top = this.boy.y_pos + "px";
+    //this.boy.element.style.borderRadius = this.boy.radius + "px";
     for (let i = 0; i < this.platforms.length; i++) {
       this.platforms[i].element.style.left = this.platforms[i].x_pos + 10 + "px";
       this.platforms[i].element.style.top = this.platforms[i].y_pos + 10 + "px";
