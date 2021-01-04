@@ -92,7 +92,7 @@ BobaBoyApp = {
   },
 
   startGame: function () {
-    this.simulation = setInterval(this.animate.bind(BobaBoyApp), 25)
+    this.simulation = setInterval(this.animate.bind(BobaBoyApp), 20)
   },
 
   createObstacles: function () {
@@ -269,7 +269,7 @@ BobaBoyApp = {
         //can only jump when he is on a platform. in this case: the ground
         //may have to make different scenarios for platforms we add in.
         if (BobaBoyApp.boy.onPlatform == true) {
-          BobaBoyApp.boy.y_vel = 12.1
+          BobaBoyApp.boy.y_vel = 8.9
         }
       }
     }
@@ -302,7 +302,7 @@ BobaBoyApp = {
       return this.boy.y_vel = this.boy.y_vel
     }
     else {
-      return this.boy.y_vel = this.boy.y_vel - 0.5;
+      return this.boy.y_vel = this.boy.y_vel - 0.25;
     }
   },
 
