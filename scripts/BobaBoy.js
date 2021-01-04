@@ -14,9 +14,7 @@ BobaBoyApp = {
 
   boba: [],
 
-  goal: {
-
-  },
+  goal: null,
 
   init: function () {
     this.createBobaBoy()
@@ -27,6 +25,8 @@ BobaBoyApp = {
     pic.setAttribute("width", "20");
     this.boy.element.appendChild(pic);
 
+    this.createGoal()
+
     this.startGame()
     this.movement()
 
@@ -34,10 +34,12 @@ BobaBoyApp = {
       BobaBoyApp.platforms.push(this.createPlatforms())
     }
     for (let i = 0; i < 4; i++) {
-      this.platforms[i].x_pos = Math.random()*30 + 100 + i*100
-      this.platforms[i].y_pos = Math.random()*60 + 400 - i*100
+      this.platforms[i].x_pos = Math.random() * 30 + 120 + i * 120
+      this.platforms[i].y_pos = Math.random() * 60 + 400 - i * 100
     }
-    
+
+    //this.platforms[3].x_pos = 520
+    this.platforms[3].y_pos = 160
 
     for (let i = 0; i < 1; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
@@ -53,6 +55,20 @@ BobaBoyApp = {
   },
 
   createlevel: function () { },
+
+  createGoal: function () {
+    let goaldiv = document.createElement("div");
+    goaldiv.id = "goal"
+    this.container.append(goaldiv)
+    let goal = {
+      x_pos: 679,
+      y_pos: 50,
+      width: 20,
+      height: 50,
+      element: goaldiv,
+    }
+    BobaBoyApp.goal = goal
+  },
 
   createBobaBoy: function () {
     let bobaboydiv = document.createElement("div");
@@ -88,7 +104,7 @@ BobaBoyApp = {
       x_pos: 110,
       y_pos: 400,
       x_vel: 0,
-      y_vel: -5,
+      y_vel: -1,
       x_max: 100,
       y_max: 100,
       element: obstaclediv
@@ -119,8 +135,8 @@ BobaBoyApp = {
     this.container.append(platformdiv);
     let platform = {
       element: platformdiv,
-      x_pos: Math.random()*30 + 100,
-      y_pos: Math.random()*60 + 400,
+      x_pos: Math.random() * 30 + 100,
+      y_pos: Math.random() * 60 + 400,
       x_length: 100,
       y_length: 10,
     }
@@ -144,6 +160,28 @@ BobaBoyApp = {
   },
 
   resume: function () {
+
+  },
+
+  endGame: function () {
+    //need to show time/score and restart button
+    this.container.removeChild(this.boy.element)
+    this.boy.x_pos = null
+    this.boy.y_pos = null
+    for (let i = 0; i < this.platforms.length; i++) {
+      this.container.removeChild(this.platforms[i].element)
+    }
+    for (let i = 0; i < this.boba.length; i++) {
+      if (this.boba[i].x_pos != null) {
+        this.container.removeChild(this.boba[i].element)
+        this.boba[i].x_pos = null
+        this.boba[i].y_pos = null
+      }
+    }
+    for (let i = 0; i < this.obstacles.length; i++) {
+      this.container.removeChild(this.obstacles[i].element)
+    }
+    this.container.removeChild(this.goal.element)
 
   },
 
@@ -189,9 +227,9 @@ BobaBoyApp = {
     for (let i = 0; i < this.boba.length; i++) {
       let x_dif = (this.boy.x_pos + this.boy.radius - (this.boba[i].x_pos + this.boba[i].radius))
       let y_dif = (this.boy.y_pos + this.boy.radius - (this.boba[i].y_pos + this.boba[i].radius))
-      let dist = Math.sqrt(x_dif*x_dif + y_dif*y_dif)
-      
-      if(dist <= this.boy.radius + this.boba[i].radius){
+      let dist = Math.sqrt(x_dif * x_dif + y_dif * y_dif)
+
+      if (dist <= this.boy.radius + this.boba[i].radius && this.boba[i].x_pos != null) {
         //console.log("collision")
         //this.boba.splice(i,i)
         //dont know if this ^ is needed. Removing the element from the array...
@@ -204,6 +242,17 @@ BobaBoyApp = {
       }
     }
 
+    //collision for the goal
+    let x_pnt = this.clamp(this.goal.x_pos, this.goal.x_pos + this.goal.width, this.boy.x_pos)
+    let y_pnt = this.clamp(this.goal.y_pos, this.goal.y_pos + this.goal.height, this.boy.y_pos)
+
+    let dist = Math.sqrt((x_pnt - this.boy.x_pos)*(x_pnt - this.boy.x_pos) + (y_pnt - this.boy.y_pos)*(y_pnt - this.boy.y_pos))
+
+    if (dist <= this.boy.radius) {
+      
+      console.log("Drink Delivered!")
+      this.endGame()
+    }
   },
 
   movement: function () {
@@ -288,6 +337,11 @@ BobaBoyApp = {
       this.boba[i].element.style.left = this.boba[i].x_pos + this.boba[i].radius + "px";
       this.boba[i].element.style.top = this.boba[i].y_pos + this.boba[i].radius + "px";
     }
+
+    this.goal.element.style.left = this.goal.x_pos + "px";
+    this.goal.element.style.top = this.goal.y_pos + "px";
+    this.goal.element.style.width = this.goal.width + "px";
+    this.goal.element.style.height = this.goal.height + "px";
   },
 
   determinePlatform: function () {
