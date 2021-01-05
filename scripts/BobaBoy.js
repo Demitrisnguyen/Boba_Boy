@@ -6,6 +6,8 @@ BobaBoyApp = {
 
   timer: undefined,
 
+  time: null,
+
   boy: null,
 
   platforms: [],
@@ -30,7 +32,8 @@ BobaBoyApp = {
     this.createGoal()
 
     this.startGame()
-    this.startTimer()
+    this.createTimer() //I put this at the end
+    //this.startTimer()
     this.movement()
 
     for (let i = 0; i < 4; i++) {
@@ -55,6 +58,7 @@ BobaBoyApp = {
       this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
       this.boba[i].y_pos = this.platforms[i].y_pos - 15
     }
+
   },
 
   createlevel: function () { },
@@ -99,11 +103,26 @@ BobaBoyApp = {
   },
 
   startTimer: function(){
-    this.timer = setInterval(this.timer.bind(BobaBoyApp), 1000)
+    this.timer = setInterval(this.timer.bind(BobaBoyApp), 10)
   },
 
   timer: function(){
-    console.log("and again/..")
+    this.time.value = this.time.value + 0.01
+    //console.log(this.time.value)
+    
+    this.time.element.textContent = this.time.value.toFixed(2) + "sec"
+    // "toFixed" rounds to 2 decimal places
+  },
+
+  createTimer: function(){
+    let timerdiv = document.createElement("div")
+    timerdiv.id = "time"
+    this.container.append(timerdiv);
+    let timer = {
+      value: 0,
+      element: timerdiv
+    }
+    BobaBoyApp.time = timer
   },
 
   clearTimer: function(){
@@ -196,9 +215,25 @@ BobaBoyApp = {
     for (let i = 0; i < this.obstacles.length; i++) {
       this.container.removeChild(this.obstacles[i].element)
     }
-    this.container.removeChild(this.goal.element)
 
     this.clearTimer()
+    this.container.removeChild(this.goal.element)
+
+    this.container.append(this.createRestart())
+    
+    document.getElementById("restart_button").onclick = function(){
+      console.log("restart")
+      BobaBoyApp.container.removeChild(BobaBoyApp.time.element)
+      BobaBoyApp.container.removeChild(document.getElementById("restart_button"))
+      BobaBoyApp.init()
+    }
+  },
+
+  createRestart(){
+    restartdiv = document.createElement("div")
+    restartdiv.id = "restart_button"
+    restartdiv.textContent = "Drink delivered! Play Again"
+    return restartdiv
   },
 
   collision: function () {
@@ -385,4 +420,5 @@ BobaBoyApp = {
 
 }
 
+BobaBoyApp.startTimer();
 BobaBoyApp.init();
