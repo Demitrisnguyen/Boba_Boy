@@ -4,6 +4,8 @@ BobaBoyApp = {
 
   simulation: undefined,
 
+  timer: undefined,
+
   boy: null,
 
   platforms: [],
@@ -28,6 +30,7 @@ BobaBoyApp = {
     this.createGoal()
 
     this.startGame()
+    this.startTimer()
     this.movement()
 
     for (let i = 0; i < 4; i++) {
@@ -93,6 +96,18 @@ BobaBoyApp = {
 
   startGame: function () {
     this.simulation = setInterval(this.animate.bind(BobaBoyApp), 20)
+  },
+
+  startTimer: function(){
+    this.timer = setInterval(this.timer.bind(BobaBoyApp), 1000)
+  },
+
+  timer: function(){
+    console.log("and again/..")
+  },
+
+  clearTimer: function(){
+    window.clearInterval(this.timer)
   },
 
   createObstacles: function () {
@@ -183,6 +198,7 @@ BobaBoyApp = {
     }
     this.container.removeChild(this.goal.element)
 
+    this.clearTimer()
   },
 
   collision: function () {
