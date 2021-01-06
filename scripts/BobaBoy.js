@@ -4,17 +4,25 @@ BobaBoyApp = {
 
   simulation: undefined,
 
+  timer: undefined,
+
+  time: null,
+
   boy: null,
 
   platforms: [],
-
-  Levels: [],
 
   obstacles: [],
 
   boba: [],
 
+  boba_position: [], //needed in order to move the platforms.
+
   goal: null,
+
+  score: {
+
+  },
 
   init: function () {
     this.createBobaBoy()
@@ -28,18 +36,27 @@ BobaBoyApp = {
     this.createGoal()
 
     this.startGame()
+    this.createTimer()
+    this.startTimer()
     this.movement()
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 9; i++) {
       BobaBoyApp.platforms.push(this.createPlatforms())
     }
     for (let i = 0; i < 4; i++) {
-      this.platforms[i].x_pos = Math.random() * 30 + 120 + i * 120
+      this.platforms[i].x_pos = Math.random() * 30 + 130 + i * 130
       this.platforms[i].y_pos = Math.random() * 60 + 400 - i * 100
     }
+    for (let i = 4; i < 7; i++) {
+      this.platforms[i].x_pos = Math.random() * 150 + 50
+      this.platforms[i].y_pos = Math.random() * 60 + 50 + (i - 4) * 100
+    }
 
-    //this.platforms[3].x_pos = 520
-    this.platforms[3].y_pos = 160
+    for (let i = 7; i < 9; i++) {
+      this.platforms[i].y_pos = Math.random() * 60 + (i - 4) * 100
+    }
+    this.platforms[7].x_pos = Math.random() * 80 + 520
+    this.platforms[8].x_pos = Math.random() * 180 + 390
 
     for (let i = 0; i < 1; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
@@ -52,9 +69,26 @@ BobaBoyApp = {
       this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
       this.boba[i].y_pos = this.platforms[i].y_pos - 15
     }
-  },
 
-  createlevel: function () { },
+    
+      this.platforms[Math.round(Math.random()*2)].x_vel = Math.random() * 3 - 1.5
+      this.platforms[Math.round(Math.random()) + 3].x_vel = Math.random() * 3 - 1.5
+      this.platforms[Math.round(Math.random()) + 5].x_vel = Math.random() * 3 - 1.5
+      this.platforms[Math.round(Math.random()) + 7].x_vel = Math.random() * 3 - 1.5
+
+    for(let i = 0; i < this.platforms.length; i++){
+    if(this.platforms[i].x_vel != 0){
+      this.boba_position[i] = this.boba[i].x_pos
+      if(this.platforms[i].x_vel < 1.5 && this.platforms[i].x_vel >= 0){
+        this.platforms[i].x_vel = 1.5
+      }
+      else if(this.platforms[i].x_vel > -1.5 && this.platforms[i].x_vel <= 0){
+        this.platforms[i].x_vel = -1.5
+      }
+    }
+  }
+
+  },
 
   createGoal: function () {
     let goaldiv = document.createElement("div");
@@ -95,6 +129,33 @@ BobaBoyApp = {
     this.simulation = setInterval(this.animate.bind(BobaBoyApp), 20)
   },
 
+  startTimer: function(){
+    this.timer = setInterval(this.timer.bind(BobaBoyApp), 10)
+  },
+
+  timer: function(){
+    this.time.value = this.time.value + 0.01
+    //console.log(this.time.value)
+    
+    this.time.element.textContent = this.time.value.toFixed(2) + " " + "sec"
+    // "toFixed" rounds to 2 decimal places
+  },
+
+  createTimer: function(){
+    let timerdiv = document.createElement("div")
+    timerdiv.id = "time"
+    this.container.append(timerdiv);
+    let timer = {
+      value: 0,
+      element: timerdiv
+    }
+    BobaBoyApp.time = timer
+  },
+
+  clearTimer: function(){
+    window.clearInterval(this.timer)
+  },
+
   createObstacles: function () {
     let obstaclediv = document.createElement("div");
     obstaclediv.className = "obstacle";
@@ -110,6 +171,12 @@ BobaBoyApp = {
       element: obstaclediv
     }
     return obstacle
+  },
+
+  createScore: function(){
+    let scorediv = document.createElement("div");
+    scorediv.id = "score";
+    this.container.append(scorediv)
   },
 
   createHearts: function () {
@@ -139,6 +206,7 @@ BobaBoyApp = {
       y_pos: Math.random() * 60 + 400,
       x_length: 100,
       y_length: 10,
+      x_vel: 0,
     }
     return platform
   },
@@ -151,9 +219,7 @@ BobaBoyApp = {
     this.collision()
   },
 
-  startLevel: function () {
-
-  },
+  //startLevel: function () {},
 
   pause: function () {
 
@@ -165,12 +231,18 @@ BobaBoyApp = {
 
   endGame: function () {
     //need to show time/score and restart button
+    this.createScore()
+
+    let score = Math.round((5000 + this.boy.bobascollected * 10000) - (this.time.value * 500))
+
+    document.getElementById("score").textContent = "Score:" + " " + score
+    
     this.container.removeChild(this.boy.element)
-    this.boy.x_pos = null
-    this.boy.y_pos = null
+    this.boy = null
     for (let i = 0; i < this.platforms.length; i++) {
       this.container.removeChild(this.platforms[i].element)
     }
+    this.platforms = []
     for (let i = 0; i < this.boba.length; i++) {
       if (this.boba[i].x_pos != null) {
         this.container.removeChild(this.boba[i].element)
@@ -178,11 +250,35 @@ BobaBoyApp = {
         this.boba[i].y_pos = null
       }
     }
+    this.boba = []
     for (let i = 0; i < this.obstacles.length; i++) {
       this.container.removeChild(this.obstacles[i].element)
     }
+    this.obstacles = []
+
+    window.clearInterval(this.simulation)
+
+    this.clearTimer()
+
     this.container.removeChild(this.goal.element)
 
+    this.createRestart()
+    
+    document.getElementById("restart_button").onclick = function(){
+      //console.log("restart")
+      BobaBoyApp.container.removeChild(BobaBoyApp.time.element)
+      BobaBoyApp.container.removeChild(document.getElementById("restart_button"))
+      BobaBoyApp.container.removeChild(document.getElementById("score"))
+      BobaBoyApp.init()
+      BobaBoyApp.startTimer()
+    }
+  },
+
+  createRestart(){
+    restartdiv = document.createElement("div")
+    restartdiv.id = "restart_button"
+    restartdiv.textContent = "Drink delivered! Play Again"
+    this.container.append(restartdiv)
   },
 
   collision: function () {
@@ -312,6 +408,19 @@ BobaBoyApp = {
     if (this.boy.y_pos > 480) {
       this.boy.y_pos = 480
     }
+
+    for(i = 0; i < this.platforms.length; i++){
+      if(this.platforms[i].x_vel != 0){ 
+      if(this.platforms[i].x_pos >= this.boba_position[i] + 5){
+        this.platforms[i].x_vel = this.platforms[i].x_vel * -1
+      }
+      else if(this.platforms[i].x_pos <= this.boba_position[i] + 5 - 100){
+        this.platforms[i].x_vel = this.platforms[i].x_vel * -1
+      }
+      
+      this.platforms[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_vel
+    }
+    }
   },
 
   moveObstacles: function () {
@@ -374,4 +483,5 @@ BobaBoyApp = {
 
 }
 
+//BobaBoyApp.startTimer();
 BobaBoyApp.init();
