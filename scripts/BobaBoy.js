@@ -27,12 +27,12 @@ BobaBoyApp = {
   init: function () {
     this.createBobaBoy()
 
-    let pic = document.createElement("img");
-    this.boy.element.appendChild(pic);
-    pic.setAttribute("src", "images/Bobaboy_stand.png");
-    pic.setAttribute("height", "40");
-    pic.setAttribute("width", "40");
-    pic.className = "bobapic"
+    this.boy.pic = document.createElement("img");
+    this.boy.element.appendChild(this.boy.pic);
+    this.boy.pic.setAttribute("src", "images/Bobaboy_stand.png");
+    this.boy.pic.setAttribute("height", "40");
+    this.boy.pic.setAttribute("width", "40");
+    this.boy.pic.className = "bobapic"
 
     this.createGoal()
 
@@ -123,6 +123,7 @@ BobaBoyApp = {
       obstacleCollision: false,
       bobascollected: 0,
       lives: 3,
+      pic: null,
       element: bobaboydiv,
     }
     BobaBoyApp.boy = Boy
@@ -237,7 +238,9 @@ BobaBoyApp = {
     this.createScore()
 
     let score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
-
+      if(score < 0){
+        score = 0
+      }
     document.getElementById("score").textContent = "Score:" + " " + score
     
     this.container.removeChild(this.boy.element)
@@ -360,18 +363,19 @@ BobaBoyApp = {
     window.onkeydown = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 4
-
-        this.pic.setAttribute("src", "images/Bobaboy_right (1).png");
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_right (1).png");
         
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = -4
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_left.png")
       }
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         //can only jump when he is on a platform. in this case: the ground
         //may have to make different scenarios for platforms we add in.
         if (BobaBoyApp.boy.onPlatform == true) {
           BobaBoyApp.boy.y_vel = 8.9
+          BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_jump.png")
         }
       }
     }
@@ -379,12 +383,16 @@ BobaBoyApp = {
     window.onkeyup = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 0
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = 0
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
       }
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         if (BobaBoyApp.boy.onPlatform == false) {
+            BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
+          
           if (BobaBoyApp.boy.y_vel > 0) {
             //only make velocity decrease when the velocity is positive
             //this makes it so that when the player releases jump key, bobaboy will start to fall.
