@@ -427,11 +427,11 @@ BobaBoyApp = {
     for (let i = 0; i < this.obstacles.length; i++) {
       this.obstacles[i].x_pos = this.obstacles[i].x_pos + this.obstacles[i].x_vel
       this.obstacles[i].y_pos = this.obstacles[i].y_pos + this.obstacles[i].y_vel
-    }
-    if(this.obstacles[0].y_pos <= 300) {
-      this.obstacles[0].y_vel = this.obstacles[0].y_vel * -1;
-    } else if (this.obstacles[0].y_pos >= 400) {
-      this.obstacles[0].y_vel = this.obstacles[0].y_vel * -1;
+      if(this.obstacles[i].y_pos <= this.platforms[i].y_pos - 70) {
+        this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
+      } else if (this.obstacles[0].y_pos >= this.platforms[i].y_pos + 10) {
+        this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
+      }
     }
   },
 
