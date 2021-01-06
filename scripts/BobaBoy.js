@@ -100,7 +100,7 @@ BobaBoyApp = {
     let goal = {
       x_pos: 679,
       y_pos: 50,
-      width: 20,
+      width: 70,
       height: 50,
       element: goaldiv,
     }
@@ -288,7 +288,7 @@ BobaBoyApp = {
   },
 
   collision: function () {
-
+//platform collision
     for (let i = 0; i < this.platforms.length; i++) {
       let x_point = this.clamp(this.platforms[i].x_pos, this.platforms[i].x_pos + 100, this.boy.x_pos)
       let y_point = this.clamp(this.platforms[i].y_pos, this.platforms[i].y_pos + 10, this.boy.y_pos)
@@ -325,7 +325,7 @@ BobaBoyApp = {
         }
       }
     }
-
+//boba ball collision
     for (let i = 0; i < this.boba.length; i++) {
       let x_dif = (this.boy.x_pos + this.boy.radius - (this.boba[i].x_pos + this.boba[i].radius))
       let y_dif = (this.boy.y_pos + this.boy.radius - (this.boba[i].y_pos + this.boba[i].radius))
@@ -345,16 +345,23 @@ BobaBoyApp = {
     }
 
     //collision for the goal
-    let x_pnt = this.clamp(this.goal.x_pos, this.goal.x_pos + this.goal.width, this.boy.x_pos)
-    let y_pnt = this.clamp(this.goal.y_pos, this.goal.y_pos + this.goal.height, this.boy.y_pos)
-
-    let dist = Math.sqrt((x_pnt - this.boy.x_pos)*(x_pnt - this.boy.x_pos) + (y_pnt - this.boy.y_pos)*(y_pnt - this.boy.y_pos))
-
-    if (dist <= this.boy.radius) {
-      
-      console.log("Drink Delivered!")
-      this.endGame()
+    if (this.boy.x_pos >= this.goal.x_pos && this.boy.x_pos + 2*this.boy.radius <= this.goal.x_pos + this.goal.width && this.boy.y_pos + 2*this.boy.radius < this.goal.y_pos){
+      let distance = this.goal.y_pos - (this.boy.y_pos + 2*this.boy.radius)
+      if (distance <= this.boy.radius && this.boy.y_vel <= 0){
+        console.log("Drink Delivered!")
+        this.endGame()
+      }
     }
+    //let x_pnt = this.clamp(this.goal.x_pos, this.goal.x_pos + this.goal.width, this.boy.x_pos)
+    //let y_pnt = this.clamp(this.goal.y_pos, this.goal.y_pos + this.goal.height, this.boy.y_pos)
+
+    //let dist = Math.sqrt((x_pnt - this.boy.x_pos)*(x_pnt - this.boy.x_pos) + (y_pnt - this.boy.y_pos)*(y_pnt - this.boy.y_pos))
+
+    //if (dist <= this.boy.radius) {
+      
+      //console.log("Drink Delivered!")
+      //this.endGame()
+    //}
   },
 
   movement: function () {
