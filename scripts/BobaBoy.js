@@ -28,10 +28,11 @@ BobaBoyApp = {
     this.createBobaBoy()
 
     let pic = document.createElement("img");
-    pic.setAttribute("src", "images/boba.png");
-    pic.setAttribute("height", "20");
-    pic.setAttribute("width", "20");
     this.boy.element.appendChild(pic);
+    pic.setAttribute("src", "images/Bobaboy_stand.png");
+    pic.setAttribute("height", "40");
+    pic.setAttribute("width", "40");
+    pic.className = "bobapic"
 
     this.createGoal()
 
@@ -58,8 +59,10 @@ BobaBoyApp = {
     this.platforms[7].x_pos = Math.random() * 80 + 520
     this.platforms[8].x_pos = Math.random() * 180 + 390
 
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
+      this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+      this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
     }
 
     for (let i = 0; i < this.platforms.length; i++) {
@@ -233,7 +236,7 @@ BobaBoyApp = {
     //need to show time/score and restart button
     this.createScore()
 
-    let score = Math.round((5000 + this.boy.bobascollected * 10000) - (this.time.value * 500))
+    let score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
 
     document.getElementById("score").textContent = "Score:" + " " + score
     
@@ -357,6 +360,9 @@ BobaBoyApp = {
     window.onkeydown = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 4
+
+        this.pic.setAttribute("src", "images/Bobaboy_right (1).png");
+        
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = -4
@@ -429,7 +435,7 @@ BobaBoyApp = {
       this.obstacles[i].y_pos = this.obstacles[i].y_pos + this.obstacles[i].y_vel
       if(this.obstacles[i].y_pos <= this.platforms[i].y_pos - 70) {
         this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
-      } else if (this.obstacles[0].y_pos >= this.platforms[i].y_pos + 10) {
+      } else if (this.obstacles[i].y_pos >= this.platforms[i].y_pos + 10) {
         this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
       }
     }
