@@ -319,9 +319,9 @@ BobaBoyApp = {
       this.obstacles[i].x_pos = this.obstacles[i].x_pos + this.obstacles[i].x_vel
       this.obstacles[i].y_pos = this.obstacles[i].y_pos + this.obstacles[i].y_vel
     }
-    if(this.obstacles[0].y_pos <= 100) {
+    if(this.obstacles[0].y_pos <= 300) {
       this.obstacles[0].y_vel = this.obstacles[0].y_vel * -1;
-    } if(this.obstacles[0].y_pos >= 370) {
+    } else if (this.obstacles[0].y_pos >= 400) {
       this.obstacles[0].y_vel = this.obstacles[0].y_vel * -1;
     }
   },
