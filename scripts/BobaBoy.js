@@ -58,7 +58,7 @@ BobaBoyApp = {
     this.platforms[7].x_pos = Math.random() * 80 + 520
     this.platforms[8].x_pos = Math.random() * 180 + 390
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 9; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
     }
 
