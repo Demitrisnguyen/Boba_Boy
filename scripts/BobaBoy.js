@@ -2,9 +2,9 @@ BobaBoyApp = {
 
   container: document.getElementById("Boba_container"),
 
-  simulation: undefined,
+  simulationid: undefined,
 
-  timer: undefined,
+  timerid: undefined,
 
   time: null,
 
@@ -136,11 +136,11 @@ BobaBoyApp = {
   },
 
   startGame: function () {
-    this.simulation = setInterval(this.animate.bind(BobaBoyApp), 20)
+    this.simulationid = setInterval(this.animate.bind(BobaBoyApp), 20)
   },
 
   startTimer: function(){
-    this.timer = setInterval(this.timer.bind(BobaBoyApp), 10)
+    this.timerid = setInterval(this.timer.bind(BobaBoyApp), 10)
   },
 
   timer: function(){
@@ -162,9 +162,6 @@ BobaBoyApp = {
     BobaBoyApp.time = timer
   },
 
-  clearTimer: function(){
-    window.clearInterval(this.timer)
-  },
 
   createObstacles: function () {
     let obstaclediv = document.createElement("div");
@@ -267,9 +264,9 @@ BobaBoyApp = {
     }
     this.obstacles = []
 
-    window.clearInterval(this.simulation)
+    window.clearInterval(this.simulationid)
 
-    this.clearTimer()
+    window.clearInterval(this.timerid)
 
     this.container.removeChild(this.goal.element)
 
