@@ -19,12 +19,18 @@ body {
     margin: auto;
     height: 500px;
     width: 700px;
-    border: solid 1px black;
+    
     border-radius: 10px;
     background-color: white;
     display: flex;
     justify-content: center;
-    background-image:url("images/back.png");
+    
+}
+
+#back {
+  position: absolute;
+  top: -5px;
+  border-radius: 10px;
 }
 
 .boy{
@@ -70,6 +76,7 @@ body {
 
 #time {
   position: absolute;
+  font-size: 20px;
 }
 
 #restart_button {
@@ -86,7 +93,8 @@ body {
 
 #score {
   position: absolute;
-  top: 100px;
+  top: 400px;
+  font-size: 30px;
 }
 
 .bobapic{
@@ -100,4 +108,10 @@ body {
   position: absolute;
   top: -20;
   left: -4
+}
+
+#endmessage{
+  position: absolute;
+  top: 100;
+  font-size: 50px;
 }

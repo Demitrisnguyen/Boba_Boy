@@ -27,6 +27,13 @@ BobaBoyApp = {
   init: function () {
     this.createBobaBoy()
 
+    background = document.createElement("img");
+    this.container.append(background)
+    background.setAttribute("src", "images/back.png")
+    background.id = "background"
+    background.setAttribute("width", "800")
+    background.setAttribute("height", "540")
+
     this.boy.pic = document.createElement("img");
     this.boy.element.appendChild(this.boy.pic);
     this.boy.pic.setAttribute("src", "images/Bobaboy_stand.png");
@@ -243,12 +250,25 @@ BobaBoyApp = {
     if(this.boy.killed == true){
     score = 0
     } else {
-      let score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
+      score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
       if(score < 0){
         score = 0
       }
     }
-    document.getElementById("score").textContent = "Score:" + " " + score
+    document.getElementById("score").textContent = "Rating:" + " " + score
+
+    this.createRestart()
+
+    this.createEndMessage()
+
+    this.container.removeChild(background)
+
+    background = document.createElement("img");
+    this.container.append(background)
+    background.setAttribute("src", "images/back.png")
+    background.id = "background"
+    background.setAttribute("width", "800")
+    background.setAttribute("height", "540")
     
     this.container.removeChild(this.boy.element)
     this.boy = null
@@ -274,28 +294,34 @@ BobaBoyApp = {
     window.clearInterval(this.timerid)
 
     this.container.removeChild(this.goal.element)
-
-    this.createRestart()
     
     document.getElementById("restart_button").onclick = function(){
       //console.log("restart")
+      BobaBoyApp.container.removeChild(background)
       BobaBoyApp.container.removeChild(BobaBoyApp.time.element)
       BobaBoyApp.container.removeChild(document.getElementById("restart_button"))
       BobaBoyApp.container.removeChild(document.getElementById("score"))
+      BobaBoyApp.container.removeChild(document.getElementById("endmessage"))
       BobaBoyApp.init()
-      BobaBoyApp.startTimer()
     }
   },
 
-  createRestart(){
+  createEndMessage: function(){
+    let endmessagediv = document.createElement("div")
+    this.container.append(endmessagediv)
+    endmessagediv.id = "endmessage"
+    if(this.boy.killed == true){
+      endmessagediv.textContent = "You dropped your drink! (>_<)"
+      } else {
+        endmessagediv.textContent = "Drink delivered! (OwO)"
+      }
+  },
+
+  createRestart: function(){
     let restartdiv = document.createElement("div")
     restartdiv.id = "restart_button"
-    if(this.boy.killed == true){
-      restartdiv.textcontent = "You dropped your drink!"
-      } else {
-        restartdiv.textContent = "Drink delivered! Play Again"
-      }
-    this.container.appendChild(restartdiv)
+    restartdiv.textContent = "Play Again"
+    this.container.append(restartdiv)
   },
 
   collision: function () {
@@ -365,27 +391,21 @@ BobaBoyApp = {
     }
     //obstacle collision
   for (let i = 0; i < this.obstacles.length; i++) {
-    let x_point = this.clamp(this.obstacles[i].x_pos, this.obstacles[i].x_pos + 20, this.boy.x_pos)
-    let y_point = this.clamp(this.obstacles[i].y_pos, this.obstacles[i].y_pos + 20, this.boy.y_pos)
+    let x = this.boy.x_pos + this.boy.radius
+    let y = this.boy.y_pos + this.boy.radius
+    let x_pnt = this.clamp(this.obstacles[i].x_pos, this.obstacles[i].x_pos + 20, x)
+    let y_pnt = this.clamp(this.obstacles[i].y_pos, this.obstacles[i].y_pos + 20, y)
 
-    let distance = Math.sqrt((x_point - this.boy.x_pos) * (x_point - this.boy.x_pos) + (y_point - this.boy.y_pos) * (y_point - this.boy.y_pos))
+    let distance = Math.sqrt((x_pnt - x) * (x_pnt - x) + (y_pnt - y) * (y_pnt - y))
 
    if(distance <= this.boy.radius) {
     this.boy.killed = true;
     this.endGame()
+
    } 
      
   }
-    //let x_pnt = this.clamp(this.goal.x_pos, this.goal.x_pos + this.goal.width, this.boy.x_pos)
-    //let y_pnt = this.clamp(this.goal.y_pos, this.goal.y_pos + this.goal.height, this.boy.y_pos)
-
-    //let dist = Math.sqrt((x_pnt - this.boy.x_pos)*(x_pnt - this.boy.x_pos) + (y_pnt - this.boy.y_pos)*(y_pnt - this.boy.y_pos))
-
-    //if (dist <= this.boy.radius) {
-      
-      //console.log("Drink Delivered!")
-      //this.endGame()
-    //}
+    
   },
 
   movement: function () {
@@ -472,7 +492,7 @@ BobaBoyApp = {
     for (let i = 0; i < this.obstacles.length; i++) {
       this.obstacles[i].x_pos = this.obstacles[i].x_pos + this.obstacles[i].x_vel
       this.obstacles[i].y_pos = this.obstacles[i].y_pos + this.obstacles[i].y_vel
-      if(this.obstacles[i].y_pos <= this.platforms[i].y_pos - 70) {
+      if(this.obstacles[i].y_pos <= this.platforms[i].y_pos - this.obstacles[i].y_max) {
         this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
       } else if (this.obstacles[i].y_pos >= this.platforms[i].y_pos + 10) {
         this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
