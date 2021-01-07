@@ -173,7 +173,6 @@ BobaBoyApp = {
     obstaclediv.className = "obstacle";
     this.container.append(obstaclediv);
     let obstacle = {
-      radius: 15,
       x_pos: 110,
       y_pos: 400,
       x_vel: 0,
