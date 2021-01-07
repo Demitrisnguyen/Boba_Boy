@@ -171,7 +171,6 @@ BobaBoyApp = {
     obstaclediv.className = "obstacle";
     this.container.append(obstaclediv);
     let obstacle = {
-      radius: 15,
       x_pos: 110,
       y_pos: 400,
       x_vel: 0,
@@ -247,7 +246,7 @@ BobaBoyApp = {
       if(score < 0){
         score = 0
       }
-    document.getElementById("score").textContent = "Score:" + " " + score
+    document.getElementById("score").textContent = "Rating:" + " " + score + "/" + "10000"
     
     this.container.removeChild(this.boy.element)
     this.boy = null
