@@ -27,13 +27,19 @@ BobaBoyApp = {
   init: function () {
     this.createBobaBoy()
 
-    let pic = document.createElement("img");
-    pic.setAttribute("src", "images/boba.png");
-    pic.setAttribute("height", "20");
-    pic.setAttribute("width", "20");
-    this.boy.element.appendChild(pic);
+    this.boy.pic = document.createElement("img");
+    this.boy.element.appendChild(this.boy.pic);
+    this.boy.pic.setAttribute("src", "images/Bobaboy_stand.png");
+    this.boy.pic.setAttribute("height", "40");
+    this.boy.pic.setAttribute("width", "40");
+    this.boy.pic.className = "bobapic"
 
     this.createGoal()
+    this.goal.pic = document.createElement("img");
+    this.goal.element.append(this.goal.pic);
+    this.goal.pic.setAttribute("src","images/goal (1).png");
+    this.goal.pic.id = "goalpic";
+    this.goal.pic.setAttribute("height","80");
 
     this.startGame()
     this.createTimer()
@@ -58,8 +64,10 @@ BobaBoyApp = {
     this.platforms[7].x_pos = Math.random() * 80 + 520
     this.platforms[8].x_pos = Math.random() * 180 + 390
 
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
+      this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+      this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
     }
 
     for (let i = 0; i < this.platforms.length; i++) {
@@ -97,8 +105,9 @@ BobaBoyApp = {
     let goal = {
       x_pos: 679,
       y_pos: 50,
-      width: 20,
+      width: 70,
       height: 50,
+      pic: null,
       element: goaldiv,
     }
     BobaBoyApp.goal = goal
@@ -120,6 +129,7 @@ BobaBoyApp = {
       obstacleCollision: false,
       bobascollected: 0,
       lives: 3,
+      pic: null,
       element: bobaboydiv,
     }
     BobaBoyApp.boy = Boy
@@ -233,8 +243,10 @@ BobaBoyApp = {
     //need to show time/score and restart button
     this.createScore()
 
-    let score = Math.round((5000 + this.boy.bobascollected * 10000) - (this.time.value * 500))
-
+    let score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
+      if(score < 0){
+        score = 0
+      }
     document.getElementById("score").textContent = "Score:" + " " + score
     
     this.container.removeChild(this.boy.element)
@@ -282,7 +294,7 @@ BobaBoyApp = {
   },
 
   collision: function () {
-
+//platform collision
     for (let i = 0; i < this.platforms.length; i++) {
       let x_point = this.clamp(this.platforms[i].x_pos, this.platforms[i].x_pos + 100, this.boy.x_pos)
       let y_point = this.clamp(this.platforms[i].y_pos, this.platforms[i].y_pos + 10, this.boy.y_pos)
@@ -319,7 +331,7 @@ BobaBoyApp = {
         }
       }
     }
-
+//boba ball collision
     for (let i = 0; i < this.boba.length; i++) {
       let x_dif = (this.boy.x_pos + this.boy.radius - (this.boba[i].x_pos + this.boba[i].radius))
       let y_dif = (this.boy.y_pos + this.boy.radius - (this.boba[i].y_pos + this.boba[i].radius))
@@ -339,16 +351,23 @@ BobaBoyApp = {
     }
 
     //collision for the goal
-    let x_pnt = this.clamp(this.goal.x_pos, this.goal.x_pos + this.goal.width, this.boy.x_pos)
-    let y_pnt = this.clamp(this.goal.y_pos, this.goal.y_pos + this.goal.height, this.boy.y_pos)
-
-    let dist = Math.sqrt((x_pnt - this.boy.x_pos)*(x_pnt - this.boy.x_pos) + (y_pnt - this.boy.y_pos)*(y_pnt - this.boy.y_pos))
-
-    if (dist <= this.boy.radius) {
-      
-      console.log("Drink Delivered!")
-      this.endGame()
+    if (this.boy.x_pos >= this.goal.x_pos && this.boy.x_pos + 2*this.boy.radius <= this.goal.x_pos + this.goal.width && this.boy.y_vel <= 0){
+      let distance = Math.abs(this.goal.y_pos - this.boy.y_pos)
+      if (distance <= this.boy.radius){
+        console.log("Drink Delivered!")
+        this.endGame()
+      }
     }
+    //let x_pnt = this.clamp(this.goal.x_pos, this.goal.x_pos + this.goal.width, this.boy.x_pos)
+    //let y_pnt = this.clamp(this.goal.y_pos, this.goal.y_pos + this.goal.height, this.boy.y_pos)
+
+    //let dist = Math.sqrt((x_pnt - this.boy.x_pos)*(x_pnt - this.boy.x_pos) + (y_pnt - this.boy.y_pos)*(y_pnt - this.boy.y_pos))
+
+    //if (dist <= this.boy.radius) {
+      
+      //console.log("Drink Delivered!")
+      //this.endGame()
+    //}
   },
 
   movement: function () {
@@ -357,15 +376,19 @@ BobaBoyApp = {
     window.onkeydown = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 4
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_right (1).png");
+        
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = -4
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_left.png")
       }
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         //can only jump when he is on a platform. in this case: the ground
         //may have to make different scenarios for platforms we add in.
         if (BobaBoyApp.boy.onPlatform == true) {
           BobaBoyApp.boy.y_vel = 8.9
+          BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_jump.png")
         }
       }
     }
@@ -373,12 +396,16 @@ BobaBoyApp = {
     window.onkeyup = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 0
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = 0
+        BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
       }
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         if (BobaBoyApp.boy.onPlatform == false) {
+            BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
+          
           if (BobaBoyApp.boy.y_vel > 0) {
             //only make velocity decrease when the velocity is positive
             //this makes it so that when the player releases jump key, bobaboy will start to fall.
