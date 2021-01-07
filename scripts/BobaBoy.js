@@ -35,6 +35,11 @@ BobaBoyApp = {
     this.boy.pic.className = "bobapic"
 
     this.createGoal()
+    this.goal.pic = document.createElement("img");
+    this.goal.element.append(this.goal.pic);
+    this.goal.pic.setAttribute("src","images/goal (1).png");
+    this.goal.pic.id = "goalpic";
+    this.goal.pic.setAttribute("height","80");
 
     this.startGame()
     this.createTimer()
@@ -102,6 +107,7 @@ BobaBoyApp = {
       y_pos: 50,
       width: 70,
       height: 50,
+      pic: null,
       element: goaldiv,
     }
     BobaBoyApp.goal = goal
@@ -345,9 +351,9 @@ BobaBoyApp = {
     }
 
     //collision for the goal
-    if (this.boy.x_pos >= this.goal.x_pos && this.boy.x_pos + 2*this.boy.radius <= this.goal.x_pos + this.goal.width && this.boy.y_pos + 2*this.boy.radius < this.goal.y_pos){
-      let distance = this.goal.y_pos - (this.boy.y_pos + 2*this.boy.radius)
-      if (distance <= this.boy.radius && this.boy.y_vel <= 0){
+    if (this.boy.x_pos >= this.goal.x_pos && this.boy.x_pos + 2*this.boy.radius <= this.goal.x_pos + this.goal.width && this.boy.y_vel <= 0){
+      let distance = Math.abs(this.goal.y_pos - this.boy.y_pos)
+      if (distance <= this.boy.radius){
         console.log("Drink Delivered!")
         this.endGame()
       }

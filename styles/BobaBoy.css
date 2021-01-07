@@ -63,8 +63,7 @@ body {
 }
 
 #goal {
-  background-color: rgb(160, 6, 6);
-  border: 1px solid black;
+  
   position: absolute;
 }
 
@@ -94,4 +93,10 @@ body {
   top: -10;
   left: -5;
   
+}
+
+#goalpic{
+  position: absolute;
+  top: -20;
+  left: -4
 }
