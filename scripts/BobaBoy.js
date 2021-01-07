@@ -41,6 +41,8 @@ BobaBoyApp = {
     this.goal.pic.id = "goalpic";
     this.goal.pic.setAttribute("height","80");
 
+    
+
     this.startGame()
     this.createTimer()
     this.startTimer()
@@ -128,7 +130,7 @@ BobaBoyApp = {
       onPlatform: false,
       obstacleCollision: false,
       bobascollected: 0,
-      lives: 3,
+      killed: false,
       pic: null,
       element: bobaboydiv,
     }
@@ -242,11 +244,14 @@ BobaBoyApp = {
   endGame: function () {
     //need to show time/score and restart button
     this.createScore()
-
-    let score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
+    if(this.boy.killed == true){
+    score = 0
+    } else {
+      let score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
       if(score < 0){
         score = 0
       }
+    }
     document.getElementById("score").textContent = "Score:" + " " + score
     
     this.container.removeChild(this.boy.element)
@@ -287,10 +292,14 @@ BobaBoyApp = {
   },
 
   createRestart(){
-    restartdiv = document.createElement("div")
+    let restartdiv = document.createElement("div")
     restartdiv.id = "restart_button"
-    restartdiv.textContent = "Drink delivered! Play Again"
-    this.container.append(restartdiv)
+    if(this.boy.killed == true){
+      restartdiv.textcontent = "You dropped your drink!"
+      } else {
+        restartdiv.textContent = "Drink delivered! Play Again"
+      }
+    this.container.appendChild(restartdiv)
   },
 
   collision: function () {
@@ -358,6 +367,19 @@ BobaBoyApp = {
         this.endGame()
       }
     }
+    //obstacle collision
+  for (let i = 0; i < this.obstacles.length; i++) {
+    let x_point = this.clamp(this.obstacles[i].x_pos, this.obstacles[i].x_pos + 20, this.boy.x_pos)
+    let y_point = this.clamp(this.obstacles[i].y_pos, this.obstacles[i].y_pos + 20, this.boy.y_pos)
+
+    let distance = Math.sqrt((x_point - this.boy.x_pos) * (x_point - this.boy.x_pos) + (y_point - this.boy.y_pos) * (y_point - this.boy.y_pos))
+
+   if(distance <= this.boy.radius) {
+    this.boy.killed = true;
+    this.endGame()
+   } 
+     
+  }
     //let x_pnt = this.clamp(this.goal.x_pos, this.goal.x_pos + this.goal.width, this.boy.x_pos)
     //let y_pnt = this.clamp(this.goal.y_pos, this.goal.y_pos + this.goal.height, this.boy.y_pos)
 
