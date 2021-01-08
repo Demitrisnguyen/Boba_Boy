@@ -111,20 +111,14 @@ BobaBoyApp = {
     for(let i = 0; i < this.platforms.length; i++){
       if(Math.random() <= 0.5){
         if(Math.random() <= 0.5){
-        this.platforms[i].x_vel = Math.random() * 3 - 1
+        this.platforms[i].x_vel = Math.random() * 2 - 0.7
       }
       else{
-        this.platforms[i].x_vel = Math.random() * (-3) + 1
+        this.platforms[i].x_vel = Math.random() * (-2) + 0.7
       }
       }
     if(this.platforms[i].x_vel != 0){
       this.boba_position[i] = this.boba[i].x_pos
-      //if(this.platforms[i].x_vel < 1.5 && this.platforms[i].x_vel >= 0){
-      //  this.platforms[i].x_vel = 1.5
-     // }
-      //else if(this.platforms[i].x_vel > -1.5 && this.platforms[i].x_vel <= 0){
-      //  this.platforms[i].x_vel = -1.5
-      //}
     }
   }
 
@@ -206,7 +200,7 @@ BobaBoyApp = {
       y_pos: 400,
       x_vel: 0,
       y_vel: 0,
-      x_max: 100,
+      x_max: 50,
       y_max: 100,
       element: obstaclediv
     }
