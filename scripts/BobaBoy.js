@@ -528,13 +528,20 @@ BobaBoyApp = {
         }
       } else {
         //horizontal restrictions
-        if (this.obstacles[i].x_pos > this.platforms[i].x_pos + this.obstacles[i].x_max) {
+        if(this.platforms[i].x_vel != 0){
+        if (this.obstacles[i].x_pos >= this.platforms[i].x_pos + this.platforms[i].x_length && this.obstacles[i].x_vel > 0) {
           this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
-        } else if (this.obstacles[i].x_pos < this.platforms[i].x_pos - 25) {
+        } else if (this.obstacles[i].x_pos <= this.platforms[i].x_pos && this.obstacles[i].x_vel < 0) {
+          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+        }
+      } else {
+        if (this.obstacles[i].x_pos >= this.platforms[i].x_pos + this.platforms[i].x_length + this.obstacles[i].x_max) {
+          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+        } else if (this.obstacles[i].x_pos <= this.platforms[i].x_pos - this.obstacles[i].x_max) {
           this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
         }
       }
-
+      }
     }
   },
 
