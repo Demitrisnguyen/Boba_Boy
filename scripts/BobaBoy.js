@@ -75,8 +75,21 @@ BobaBoyApp = {
 
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
-      this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+     
       this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
+      if(Math.random() <= .5) {
+        this.obstacles[i].x_vel = 1;
+        this.obstacles[i].y_vel = 0;
+        this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+      } else {
+        this.obstacles[i].y_vel = -1;
+        this.obstacles[i].x_vel = 0;
+        if(Math.random() <= .5) {
+          this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].length
+        } else {
+          this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+        }
+      }
     }
 
     for (let i = 0; i < this.platforms.length; i++) {
