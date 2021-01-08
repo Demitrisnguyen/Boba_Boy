@@ -48,9 +48,6 @@ BobaBoyApp = {
     this.goal.pic.id = "goalpic";
     this.goal.pic.setAttribute("height","80");
 
-    
-
-    this.startGame()
     this.createTimer()
     this.startTimer()
     this.movement()
@@ -77,20 +74,27 @@ BobaBoyApp = {
       BobaBoyApp.obstacles.push(this.createObstacles())
      
       this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
+
+      this.platforms[i].pic = document.createElement("img");
+    this.platforms[i].element.append(this.platforms[i].pic);
+    this.platforms[i].pic.className = "platformpic"
+    this.platforms[i].pic.setAttribute("src", "images/platform.png");
+    this.platforms[i].pic.setAttribute("height", "100");
+    this.platforms[i].pic.setAttribute("width", "300");
+    }
+    for (let i = 0; i < this.obstacles.length; i++) {
       if(Math.random() <= .5) {
-        this.obstacles[i].x_vel = 1;
-        this.obstacles[i].y_vel = 0;
-        this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+      this.obstacles[i].x_vel = 1
+      this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+    } else {
+      this.obstacles[i].y_vel = -1;
+      if(Math.random() <= .5) {
+        this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].length
       } else {
-        this.obstacles[i].y_vel = -1;
-        this.obstacles[i].x_vel = 0;
-        if(Math.random() <= .5) {
-          this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].length
-        } else {
-          this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
-        }
+        this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
       }
     }
+  }
 
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.boba.push(this.createBoba())
@@ -117,6 +121,8 @@ BobaBoyApp = {
       }
     }
   }
+
+  this.startGame()
 
   },
 
@@ -193,7 +199,7 @@ BobaBoyApp = {
       x_pos: 110,
       y_pos: 400,
       x_vel: 0,
-      y_vel: -1,
+      y_vel: 0,
       x_max: 100,
       y_max: 100,
       element: obstaclediv
@@ -235,6 +241,7 @@ BobaBoyApp = {
       x_length: 100,
       y_length: 10,
       x_vel: 0,
+      pic: null,
     }
     return platform
   },
