@@ -45,8 +45,6 @@ body {
 .platform {
   height: 10px;
   width: 100px;
-  background-color: tan;
-  border: 2px solid green;
   position: absolute;
 }
 .obstacle {
@@ -118,5 +116,5 @@ body {
 .platformpic{
   position: absolute;
   top: -43px;
-  left: -88px;
+  left: -86px;
 }

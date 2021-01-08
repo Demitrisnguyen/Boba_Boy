@@ -54,6 +54,13 @@ BobaBoyApp = {
 
     for (let i = 0; i < 9; i++) {
       BobaBoyApp.platforms.push(this.createPlatforms())
+
+      this.platforms[i].pic = document.createElement("img");
+    this.platforms[i].element.append(this.platforms[i].pic);
+    this.platforms[i].pic.className = "platformpic"
+    this.platforms[i].pic.setAttribute("src", "images/platform.png");
+    this.platforms[i].pic.setAttribute("height", "100");
+    this.platforms[i].pic.setAttribute("width", "300");
     }
     for (let i = 0; i < 4; i++) {
       this.platforms[i].x_pos = Math.random() * 30 + 130 + i * 130
@@ -75,26 +82,18 @@ BobaBoyApp = {
      
       this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
 
-      this.platforms[i].pic = document.createElement("img");
-    this.platforms[i].element.append(this.platforms[i].pic);
-    this.platforms[i].pic.className = "platformpic"
-    this.platforms[i].pic.setAttribute("src", "images/platform.png");
-    this.platforms[i].pic.setAttribute("height", "100");
-    this.platforms[i].pic.setAttribute("width", "300");
-    }
-    for (let i = 0; i < this.obstacles.length; i++) {
-      if(Math.random() <= .5) {
+    if(Math.random() <= .5) {
       this.obstacles[i].x_vel = 1
       this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
     } else {
       this.obstacles[i].y_vel = -1;
       if(Math.random() <= .5) {
-        this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].length
+        this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length
       } else {
         this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
       }
     }
-  }
+    }
 
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.boba.push(this.createBoba())
@@ -103,22 +102,29 @@ BobaBoyApp = {
       this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
       this.boba[i].y_pos = this.platforms[i].y_pos - 15
     }
-
-    
-      this.platforms[Math.round(Math.random()*2)].x_vel = Math.random() * 3 - 1.5
-      this.platforms[Math.round(Math.random()) + 3].x_vel = Math.random() * 3 - 1.5
-      this.platforms[Math.round(Math.random()) + 5].x_vel = Math.random() * 3 - 1.5
-      this.platforms[Math.round(Math.random()) + 7].x_vel = Math.random() * 3 - 1.5
-
+    ///////this
+      //this.platforms[Math.round(Math.random()*2)].x_vel = Math.random() * 3 - 1.5
+     // this.platforms[Math.round(Math.random()) + 3].x_vel = Math.random() * 3 - 1.5
+     // this.platforms[Math.round(Math.random()) + 5].x_vel = Math.random() * 3 - 1.5
+     // this.platforms[Math.round(Math.random()) + 7].x_vel = Math.random() * 3 - 1.5
+/////or this
     for(let i = 0; i < this.platforms.length; i++){
+      if(Math.random() <= 0.5){
+        if(Math.random() <= 0.5){
+        this.platforms[i].x_vel = Math.random() * 3 - 1
+      }
+      else{
+        this.platforms[i].x_vel = Math.random() * (-3) + 1
+      }
+      }
     if(this.platforms[i].x_vel != 0){
       this.boba_position[i] = this.boba[i].x_pos
-      if(this.platforms[i].x_vel < 1.5 && this.platforms[i].x_vel >= 0){
-        this.platforms[i].x_vel = 1.5
-      }
-      else if(this.platforms[i].x_vel > -1.5 && this.platforms[i].x_vel <= 0){
-        this.platforms[i].x_vel = -1.5
-      }
+      //if(this.platforms[i].x_vel < 1.5 && this.platforms[i].x_vel >= 0){
+      //  this.platforms[i].x_vel = 1.5
+     // }
+      //else if(this.platforms[i].x_vel > -1.5 && this.platforms[i].x_vel <= 0){
+      //  this.platforms[i].x_vel = -1.5
+      //}
     }
   }
 
@@ -420,6 +426,7 @@ BobaBoyApp = {
 
    if(distance <= this.boy.radius) {
     this.boy.killed = true;
+    
     this.endGame()
 
    } 
@@ -512,11 +519,22 @@ BobaBoyApp = {
     for (let i = 0; i < this.obstacles.length; i++) {
       this.obstacles[i].x_pos = this.obstacles[i].x_pos + this.obstacles[i].x_vel
       this.obstacles[i].y_pos = this.obstacles[i].y_pos + this.obstacles[i].y_vel
-      if(this.obstacles[i].y_pos <= this.platforms[i].y_pos - this.obstacles[i].y_max) {
-        this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
-      } else if (this.obstacles[i].y_pos >= this.platforms[i].y_pos + 10) {
-        this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
+      if (this.obstacles[i].y_vel != 0) {
+        //vertical restrictions
+        if (this.obstacles[i].y_pos <= this.platforms[i].y_pos - this.obstacles[i].y_max) {
+          this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
+        } else if (this.obstacles[i].y_pos >= this.platforms[i].y_pos + 10) {
+          this.obstacles[i].y_vel = this.obstacles[i].y_vel * -1;
+        }
+      } else {
+        //horizontal restrictions
+        if (this.obstacles[i].x_pos > this.platforms[i].x_pos + this.obstacles[i].x_max) {
+          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+        } else if (this.obstacles[i].x_pos < this.platforms[i].x_pos - 25) {
+          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+        }
       }
+
     }
   },
 
