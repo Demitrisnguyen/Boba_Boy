@@ -31,7 +31,7 @@ BobaBoyApp = {
     this.container.append(background)
     background.setAttribute("src", "images/back.png")
     background.id = "background"
-    background.setAttribute("width", "800")
+    background.setAttribute("width", "810")
     background.setAttribute("height", "540")
 
     this.boy.pic = document.createElement("img");
@@ -287,7 +287,7 @@ BobaBoyApp = {
     this.container.append(background)
     background.setAttribute("src", "images/back.png")
     background.id = "background"
-    background.setAttribute("width", "800")
+    background.setAttribute("width", "810")
     background.setAttribute("height", "540")
     
     this.container.removeChild(this.boy.element)
