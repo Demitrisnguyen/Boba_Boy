@@ -331,9 +331,9 @@ BobaBoyApp = {
     this.container.append(endmessagediv)
     endmessagediv.id = "endmessage"
     if(this.boy.killed == true){
-      endmessagediv.textContent = "You dropped your drink! (>_<)"
+      endmessagediv.textContent = "You dropped your drink! (,-_-)"
       } else {
-        endmessagediv.textContent = "Drink delivered! (OwO)"
+        endmessagediv.textContent = "Drink delivered! <(^o^)/"
       }
   },
 
