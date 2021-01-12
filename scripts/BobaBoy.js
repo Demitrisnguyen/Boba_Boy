@@ -450,7 +450,9 @@ BobaBoyApp = {
           BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_jump.png")
         }
       }
+      
     }
+
 
     window.onkeyup = function (event) {
       if (event.keyCode == 68 || event.keyCode == 39) {
@@ -474,6 +476,9 @@ BobaBoyApp = {
             //8 seems like a good integer to use for a natural jump.
           }
         }
+      }
+      if(event.keyCode == 27){
+        history.back()
       }
     }
   },
