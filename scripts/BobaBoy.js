@@ -44,9 +44,9 @@ BobaBoyApp = {
     this.createGoal()
     this.goal.pic = document.createElement("img");
     this.goal.element.append(this.goal.pic);
-    this.goal.pic.setAttribute("src","images/goal (1).png");
+    this.goal.pic.setAttribute("src", "images/goal (1).png");
     this.goal.pic.id = "goalpic";
-    this.goal.pic.setAttribute("height","80");
+    this.goal.pic.setAttribute("height", "80");
 
     this.createTimer()
     this.startTimer()
@@ -56,11 +56,11 @@ BobaBoyApp = {
       BobaBoyApp.platforms.push(this.createPlatforms())
 
       this.platforms[i].pic = document.createElement("img");
-    this.platforms[i].element.append(this.platforms[i].pic);
-    this.platforms[i].pic.className = "platformpic"
-    this.platforms[i].pic.setAttribute("src", "images/platform.png");
-    this.platforms[i].pic.setAttribute("height", "100");
-    this.platforms[i].pic.setAttribute("width", "300");
+      this.platforms[i].element.append(this.platforms[i].pic);
+      this.platforms[i].pic.className = "platformpic"
+      this.platforms[i].pic.setAttribute("src", "images/platform.png");
+      this.platforms[i].pic.setAttribute("height", "100");
+      this.platforms[i].pic.setAttribute("width", "300");
     }
     for (let i = 0; i < 4; i++) {
       this.platforms[i].x_pos = Math.random() * 30 + 130 + i * 130
@@ -79,20 +79,20 @@ BobaBoyApp = {
 
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
-     
+
       this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
 
-    if(Math.random() <= .5) {
-      this.obstacles[i].x_vel = 1
-      this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
-    } else {
-      this.obstacles[i].y_vel = -1;
-      if(Math.random() <= .5) {
-        this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length
-      } else {
+      if (Math.random() <= .5) {
+        this.obstacles[i].x_vel = 1
         this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+      } else {
+        this.obstacles[i].y_vel = -1;
+        if (Math.random() <= .5) {
+          this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length
+        } else {
+          this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+        }
       }
-    }
     }
 
     for (let i = 0; i < this.platforms.length; i++) {
@@ -103,26 +103,26 @@ BobaBoyApp = {
       this.boba[i].y_pos = this.platforms[i].y_pos - 15
     }
     ///////this
-      //this.platforms[Math.round(Math.random()*2)].x_vel = Math.random() * 3 - 1.5
-     // this.platforms[Math.round(Math.random()) + 3].x_vel = Math.random() * 3 - 1.5
-     // this.platforms[Math.round(Math.random()) + 5].x_vel = Math.random() * 3 - 1.5
-     // this.platforms[Math.round(Math.random()) + 7].x_vel = Math.random() * 3 - 1.5
-/////or this
-    for(let i = 0; i < this.platforms.length; i++){
-      if(Math.random() <= 0.5){
-        if(Math.random() <= 0.5){
-        this.platforms[i].x_vel = Math.random() * 2 - 0.7
+    //this.platforms[Math.round(Math.random()*2)].x_vel = Math.random() * 3 - 1.5
+    // this.platforms[Math.round(Math.random()) + 3].x_vel = Math.random() * 3 - 1.5
+    // this.platforms[Math.round(Math.random()) + 5].x_vel = Math.random() * 3 - 1.5
+    // this.platforms[Math.round(Math.random()) + 7].x_vel = Math.random() * 3 - 1.5
+    /////or this
+    for (let i = 0; i < this.platforms.length; i++) {
+      if (Math.random() <= 0.5) {
+        if (Math.random() <= 0.5) {
+          this.platforms[i].x_vel = Math.random() * 2 - 0.7
+        }
+        else {
+          this.platforms[i].x_vel = Math.random() * (-2) + 0.7
+        }
       }
-      else{
-        this.platforms[i].x_vel = Math.random() * (-2) + 0.7
+      if (this.platforms[i].x_vel != 0) {
+        this.boba_position[i] = this.boba[i].x_pos
       }
-      }
-    if(this.platforms[i].x_vel != 0){
-      this.boba_position[i] = this.boba[i].x_pos
     }
-  }
 
-  this.startGame()
+    this.startGame()
 
   },
 
@@ -167,19 +167,19 @@ BobaBoyApp = {
     this.simulationid = setInterval(this.animate.bind(BobaBoyApp), 20)
   },
 
-  startTimer: function(){
+  startTimer: function () {
     this.timerid = setInterval(this.timer.bind(BobaBoyApp), 10)
   },
 
-  timer: function(){
+  timer: function () {
     this.time.value = this.time.value + 0.01
     //console.log(this.time.value)
-    
+
     this.time.element.textContent = this.time.value.toFixed(2) + " " + "sec"
     // "toFixed" rounds to 2 decimal places
   },
 
-  createTimer: function(){
+  createTimer: function () {
     let timerdiv = document.createElement("div")
     timerdiv.id = "time"
     this.container.append(timerdiv);
@@ -207,7 +207,7 @@ BobaBoyApp = {
     return obstacle
   },
 
-  createScore: function(){
+  createScore: function () {
     let scorediv = document.createElement("div");
     scorediv.id = "score";
     this.container.append(scorediv)
@@ -267,11 +267,11 @@ BobaBoyApp = {
   endGame: function () {
     //need to show time/score and restart button
     this.createScore()
-    if(this.boy.killed == true){
-    score = 0
+    if (this.boy.killed == true) {
+      score = 0
     } else {
       score = Math.round((500 + this.boy.bobascollected * 1000) - (this.time.value * 50))
-      if(score < 0){
+      if (score < 0) {
         score = 0
       }
     }
@@ -289,7 +289,7 @@ BobaBoyApp = {
     background.id = "background"
     background.setAttribute("width", "810")
     background.setAttribute("height", "540")
-    
+
     this.container.removeChild(this.boy.element)
     this.boy = null
     for (let i = 0; i < this.platforms.length; i++) {
@@ -314,8 +314,8 @@ BobaBoyApp = {
     window.clearInterval(this.timerid)
 
     this.container.removeChild(this.goal.element)
-    
-    document.getElementById("restart_button").onclick = function(){
+
+    document.getElementById("restart_button").onclick = function () {
       //console.log("restart")
       BobaBoyApp.container.removeChild(background)
       BobaBoyApp.container.removeChild(BobaBoyApp.time.element)
@@ -326,18 +326,18 @@ BobaBoyApp = {
     }
   },
 
-  createEndMessage: function(){
+  createEndMessage: function () {
     let endmessagediv = document.createElement("div")
     this.container.append(endmessagediv)
     endmessagediv.id = "endmessage"
-    if(this.boy.killed == true){
+    if (this.boy.killed == true) {
       endmessagediv.textContent = "You dropped your drink! (,-_-)"
-      } else {
-        endmessagediv.textContent = "Drink delivered! <(^o^)/"
-      }
+    } else {
+      endmessagediv.textContent = "Drink delivered! <(^o^)/"
+    }
   },
 
-  createRestart: function(){
+  createRestart: function () {
     let restartdiv = document.createElement("div")
     restartdiv.id = "restart_button"
     restartdiv.textContent = "Play Again"
@@ -345,7 +345,7 @@ BobaBoyApp = {
   },
 
   collision: function () {
-//platform collision
+    //platform collision
     for (let i = 0; i < this.platforms.length; i++) {
       let x_point = this.clamp(this.platforms[i].x_pos, this.platforms[i].x_pos + 100, this.boy.x_pos)
       let y_point = this.clamp(this.platforms[i].y_pos, this.platforms[i].y_pos + 10, this.boy.y_pos)
@@ -382,7 +382,7 @@ BobaBoyApp = {
         }
       }
     }
-//boba ball collision
+    //boba ball collision
     for (let i = 0; i < this.boba.length; i++) {
       let x_dif = (this.boy.x_pos + this.boy.radius - (this.boba[i].x_pos + this.boba[i].radius))
       let y_dif = (this.boy.y_pos + this.boy.radius - (this.boba[i].y_pos + this.boba[i].radius))
@@ -402,31 +402,31 @@ BobaBoyApp = {
     }
 
     //collision for the goal
-    if (this.boy.x_pos >= this.goal.x_pos && this.boy.x_pos + 2*this.boy.radius <= this.goal.x_pos + this.goal.width && this.boy.y_vel <= 0){
+    if (this.boy.x_pos >= this.goal.x_pos && this.boy.x_pos + 2 * this.boy.radius <= this.goal.x_pos + this.goal.width && this.boy.y_vel <= 0) {
       let distance = Math.abs(this.goal.y_pos - this.boy.y_pos)
-      if (distance <= this.boy.radius){
+      if (distance <= this.boy.radius) {
         console.log("Drink Delivered!")
         this.endGame()
       }
     }
     //obstacle collision
-  for (let i = 0; i < this.obstacles.length; i++) {
-    let x = this.boy.x_pos + this.boy.radius
-    let y = this.boy.y_pos + this.boy.radius
-    let x_pnt = this.clamp(this.obstacles[i].x_pos, this.obstacles[i].x_pos + 20, x)
-    let y_pnt = this.clamp(this.obstacles[i].y_pos, this.obstacles[i].y_pos + 20, y)
+    for (let i = 0; i < this.obstacles.length; i++) {
+      let x = this.boy.x_pos + this.boy.radius
+      let y = this.boy.y_pos + this.boy.radius
+      let x_pnt = this.clamp(this.obstacles[i].x_pos, this.obstacles[i].x_pos + 20, x)
+      let y_pnt = this.clamp(this.obstacles[i].y_pos, this.obstacles[i].y_pos + 20, y)
 
-    let distance = Math.sqrt((x_pnt - x) * (x_pnt - x) + (y_pnt - y) * (y_pnt - y))
+      let distance = Math.sqrt((x_pnt - x) * (x_pnt - x) + (y_pnt - y) * (y_pnt - y))
 
-   if(distance <= this.boy.radius) {
-    this.boy.killed = true;
-    
-    this.endGame()
+      if (distance <= this.boy.radius) {
+        this.boy.killed = true;
 
-   } 
-     
-  }
-    
+        this.endGame()
+
+      }
+
+    }
+
   },
 
   movement: function () {
@@ -436,7 +436,7 @@ BobaBoyApp = {
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 4
         BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_right (1).png");
-        
+
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = -4
@@ -450,7 +450,7 @@ BobaBoyApp = {
           BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_jump.png")
         }
       }
-      
+
     }
 
 
@@ -465,8 +465,8 @@ BobaBoyApp = {
       }
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         if (BobaBoyApp.boy.onPlatform == false) {
-            BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
-          
+          BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
+
           if (BobaBoyApp.boy.y_vel > 0) {
             //only make velocity decrease when the velocity is positive
             //this makes it so that when the player releases jump key, bobaboy will start to fall.
@@ -477,7 +477,7 @@ BobaBoyApp = {
           }
         }
       }
-      if(event.keyCode == 27){
+      if (event.keyCode == 27) {
         history.back()
       }
     }
@@ -500,17 +500,17 @@ BobaBoyApp = {
       this.boy.y_pos = 480
     }
 
-    for(i = 0; i < this.platforms.length; i++){
-      if(this.platforms[i].x_vel != 0){ 
-      if(this.platforms[i].x_pos >= this.boba_position[i] + 5){
-        this.platforms[i].x_vel = this.platforms[i].x_vel * -1
+    for (i = 0; i < this.platforms.length; i++) {
+      if (this.platforms[i].x_vel != 0) {
+        if (this.platforms[i].x_pos >= this.boba_position[i] + 5) {
+          this.platforms[i].x_vel = this.platforms[i].x_vel * -1
+        }
+        else if (this.platforms[i].x_pos <= this.boba_position[i] + 5 - 100) {
+          this.platforms[i].x_vel = this.platforms[i].x_vel * -1
+        }
+
+        this.platforms[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_vel
       }
-      else if(this.platforms[i].x_pos <= this.boba_position[i] + 5 - 100){
-        this.platforms[i].x_vel = this.platforms[i].x_vel * -1
-      }
-      
-      this.platforms[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_vel
-    }
     }
   },
 
@@ -527,19 +527,19 @@ BobaBoyApp = {
         }
       } else {
         //horizontal restrictions
-        if(this.platforms[i].x_vel != 0){
-        if (this.obstacles[i].x_pos >= this.platforms[i].x_pos + this.platforms[i].x_length && this.obstacles[i].x_vel > 0) {
-          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
-        } else if (this.obstacles[i].x_pos <= this.platforms[i].x_pos && this.obstacles[i].x_vel < 0) {
-          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+        if (this.platforms[i].x_vel != 0) {
+          if (this.obstacles[i].x_pos >= this.platforms[i].x_pos + this.platforms[i].x_length && this.obstacles[i].x_vel > 0) {
+            this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+          } else if (this.obstacles[i].x_pos <= this.platforms[i].x_pos && this.obstacles[i].x_vel < 0) {
+            this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+          }
+        } else {
+          if (this.obstacles[i].x_pos >= this.platforms[i].x_pos + this.platforms[i].x_length + this.obstacles[i].x_max) {
+            this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+          } else if (this.obstacles[i].x_pos <= this.platforms[i].x_pos - this.obstacles[i].x_max) {
+            this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
+          }
         }
-      } else {
-        if (this.obstacles[i].x_pos >= this.platforms[i].x_pos + this.platforms[i].x_length + this.obstacles[i].x_max) {
-          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
-        } else if (this.obstacles[i].x_pos <= this.platforms[i].x_pos - this.obstacles[i].x_max) {
-          this.obstacles[i].x_vel = this.obstacles[i].x_vel * -1;
-        }
-      }
       }
     }
   },
