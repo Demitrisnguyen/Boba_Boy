@@ -1,0 +1,33 @@
+body{
+    display: flex;
+    flex-flow:column;
+}
+#title { 
+    position: relative;
+    left: 22.5em;
+    margin-bottom: 1.5em;
+    justify-content:space-around;
+   }
+.navigation {
+    display: flex;
+    flex-flow:row wrap;
+    list-style: none;
+    padding-left: 10em;
+    background: tan;
+    justify-content:space-around;
+    border: solid 1px black;
+  }
+  .navigation a {
+    text-decoration: none;
+    display: block;
+    padding: 1.5em;
+    color: white;
+    font-size: x-large;
+  }
+  
+  .navigation a:hover {
+    background: black;
+  }
+
+  
+ 
