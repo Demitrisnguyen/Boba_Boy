@@ -27,19 +27,19 @@ BobaBoyApp = {
   init: function () {
     this.createBobaBoy()
 
-    background = document.createElement("img");
-    this.container.append(background)
-    background.setAttribute("src", "images/back.png")
-    background.id = "background"
-    background.setAttribute("width", "810")
-    background.setAttribute("height", "540")
-
     this.boy.pic = document.createElement("img");
     this.boy.element.appendChild(this.boy.pic);
     this.boy.pic.setAttribute("src", "images/Bobaboy_stand.png");
     this.boy.pic.setAttribute("height", "40");
     this.boy.pic.setAttribute("width", "40");
     this.boy.pic.className = "bobapic"
+    
+    background = document.createElement("img");
+    this.container.append(background)
+    background.setAttribute("src", "images/back.png")
+    background.id = "back" //when this is linked to the actual class, it covers bobaboy. idk why.
+    background.setAttribute("width", "810")
+    background.setAttribute("height", "540")
 
     this.createGoal()
     this.goal.pic = document.createElement("img");
@@ -320,7 +320,7 @@ BobaBoyApp = {
       BobaBoyApp.init()
     }
     document.getElementById("restart_button").onmouseover = function (){
-      document.getElementById("restart_button").style.backgroundColor = "blue"
+      document.getElementById("restart_button").style.backgroundColor = "orange"
     }
     document.getElementById("restart_button").onmouseout = function(){
       document.getElementById("restart_button").style.backgroundColor = " rgba(224, 192, 149, 0.85)"

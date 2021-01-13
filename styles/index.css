@@ -1,15 +1,11 @@
 body{
-    background: url('images/Bobaman.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-flow:column;
-    justify-content: center;
-    align-items: center;
+    background-color: grey;
   }
 #title { 
+    position: absolute;
+    top: -15;
     justify-content: center;
-    font-size: 100px;
+    font-size: 50px;
     font-family: "Lucida Console", "Courier New", monospace;
     color: green;
    }
@@ -37,5 +33,29 @@ body{
     background: orange;
   }
 
+  #BobaBoy {
+    display: flex;
+    justify-content: center;
+    width: 860px;
+    height: 630px;
+    margin: auto;
+    border: solid 1px black;
+    background-color: tan;
+    border-radius: 10px;
+}
+  #Boba_container {
+    background: url('images/Bobaman.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    margin: auto;
+    height: 540px;
+    width: 810px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    top: 15;
+  }
   
- 

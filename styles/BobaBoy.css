@@ -24,7 +24,7 @@ body {
     justify-content: center;
 }
 
-#back {
+#backs {
   position: absolute;
   top: -5px;
   border-radius: 10px;
@@ -124,4 +124,15 @@ body {
   position: absolute;
   top: -43px;
   left: -86px;
+}
+
+.controls{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.control{
+  padding: 30px;
 }
