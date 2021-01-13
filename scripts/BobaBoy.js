@@ -102,12 +102,7 @@ BobaBoyApp = {
       this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
       this.boba[i].y_pos = this.platforms[i].y_pos - 15
     }
-    ///////this
-    //this.platforms[Math.round(Math.random()*2)].x_vel = Math.random() * 3 - 1.5
-    // this.platforms[Math.round(Math.random()) + 3].x_vel = Math.random() * 3 - 1.5
-    // this.platforms[Math.round(Math.random()) + 5].x_vel = Math.random() * 3 - 1.5
-    // this.platforms[Math.round(Math.random()) + 7].x_vel = Math.random() * 3 - 1.5
-    /////or this
+
     for (let i = 0; i < this.platforms.length; i++) {
       if (Math.random() <= 0.5) {
         if (Math.random() <= 0.5) {
