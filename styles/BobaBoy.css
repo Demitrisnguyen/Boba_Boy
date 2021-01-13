@@ -88,6 +88,9 @@ body {
   font-size: 40px;
   color: rgb(64, 184, 64);
 }
+#restart_button:hover {
+  background: orange;
+}
 
 #score {
   position: absolute;
