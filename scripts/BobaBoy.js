@@ -324,6 +324,12 @@ BobaBoyApp = {
       BobaBoyApp.container.removeChild(document.getElementById("endmessage"))
       BobaBoyApp.init()
     }
+    document.getElementById("restart_button").onmouseover = function (){
+      document.getElementById("restart_button").style.backgroundColor = "blue"
+    }
+    document.getElementById("restart_button").onmouseout = function(){
+      document.getElementById("restart_button").style.backgroundColor = " rgba(224, 192, 149, 0.85)"
+    }
   },
 
   createEndMessage: function () {
