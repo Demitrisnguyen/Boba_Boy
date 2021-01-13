@@ -393,8 +393,8 @@ BobaBoyApp = {
         //this.boba.splice(i,i)
         //dont know if this ^ is needed. Removing the element from the array...
         //...messes the "removeChild" code down below. (makes it delete wrong element.)
-        this.boba[i].x_pos = null
-        this.boba[i].y_pos = null
+        this.boba[i].x_pos = null;
+        this.boba[i].y_pos = null;
         this.container.removeChild(this.boba[i].element)
         this.boy.bobascollected = this.boy.bobascollected + 1
         console.log("boba balls:", this.boy.bobascollected)
