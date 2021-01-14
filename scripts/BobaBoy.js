@@ -25,6 +25,7 @@ BobaBoyApp = {
   },
 
   init: function () {
+    //Demitris
     this.createBobaBoy()
 
     this.boy.pic = document.createElement("img");
@@ -76,7 +77,9 @@ BobaBoyApp = {
     }
     this.platforms[7].x_pos = Math.random() * 80 + 520
     this.platforms[8].x_pos = Math.random() * 180 + 390
+    //
 
+    //Renz
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
 
@@ -93,8 +96,9 @@ BobaBoyApp = {
           this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
         }
       }
-    }
+    }//
 
+    //Demitris
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.boba.push(this.createBoba())
     }
@@ -115,12 +119,12 @@ BobaBoyApp = {
       if (this.platforms[i].x_vel != 0) {
         this.boba_position[i] = this.boba[i].x_pos
       }
-    }
+    }//
 
     this.startGame()
 
   },
-
+//Demitris
   createGoal: function () {
     let goaldiv = document.createElement("div");
     goaldiv.id = "goal"
@@ -135,7 +139,7 @@ BobaBoyApp = {
     }
     BobaBoyApp.goal = goal
   },
-
+//Demitris
   createBobaBoy: function () {
     let bobaboydiv = document.createElement("div");
     bobaboydiv.className = "boy";
@@ -161,7 +165,7 @@ BobaBoyApp = {
   startGame: function () {
     this.simulationid = setInterval(this.animate.bind(BobaBoyApp), 20)
   },
-
+//Demitris
   startTimer: function () {
     this.timerid = setInterval(this.timer.bind(BobaBoyApp), 10)
   },
@@ -183,9 +187,9 @@ BobaBoyApp = {
       element: timerdiv
     }
     BobaBoyApp.time = timer
-  },
+  },//
 
-
+//Renz
   createObstacles: function () {
     let obstaclediv = document.createElement("div");
     obstaclediv.className = "obstacle";
@@ -200,18 +204,14 @@ BobaBoyApp = {
       element: obstaclediv
     }
     return obstacle
-  },
-
+  },//
+//Demitris
   createScore: function () {
     let scorediv = document.createElement("div");
     scorediv.id = "score";
     this.container.append(scorediv)
   },
-
-  createHearts: function () {
-
-  },
-
+//Demitris
   createBoba: function () {
     let bobadiv = document.createElement("div");
     bobadiv.className = "boba";
@@ -224,7 +224,7 @@ BobaBoyApp = {
     }
     return boba
   },
-
+//Demitris
   createPlatforms: function () {
     let platformdiv = document.createElement("div");
     platformdiv.className = "platform";
@@ -239,7 +239,7 @@ BobaBoyApp = {
       pic: null,
     }
     return platform
-  },
+  },//
 
   animate: function () {
     this.moveBobaBoy()
@@ -249,16 +249,7 @@ BobaBoyApp = {
     this.collision()
   },
 
-  //startLevel: function () {},
-
-  pause: function () {
-
-  },
-
-  resume: function () {
-
-  },
-
+//Demitris
   endGame: function () {
     //need to show time/score and restart button
     this.createScore()
@@ -325,8 +316,8 @@ BobaBoyApp = {
     document.getElementById("restart_button").onmouseout = function(){
       document.getElementById("restart_button").style.backgroundColor = " rgba(224, 192, 149, 0.85)"
     }
-  },
-
+  },//
+//Demtiris
   createEndMessage: function () {
     let endmessagediv = document.createElement("div")
     this.container.append(endmessagediv)
@@ -337,7 +328,7 @@ BobaBoyApp = {
       endmessagediv.textContent = "Drink delivered! <(^o^)/"
     }
   },
-
+//Demitris
   createRestart: function () {
     let restartdiv = document.createElement("div")
     restartdiv.id = "restart_button"
@@ -346,6 +337,7 @@ BobaBoyApp = {
   },
 
   collision: function () {
+    //Demitris. Algorithm inspired by "clamp collision" found online.
     //platform collision
     for (let i = 0; i < this.platforms.length; i++) {
       let x_point = this.clamp(this.platforms[i].x_pos, this.platforms[i].x_pos + 100, this.boy.x_pos)
@@ -391,9 +383,6 @@ BobaBoyApp = {
 
       if (dist <= this.boy.radius + this.boba[i].radius && this.boba[i].x_pos != null) {
         //console.log("collision")
-        //this.boba.splice(i,i)
-        //dont know if this ^ is needed. Removing the element from the array...
-        //...messes the "removeChild" code down below. (makes it delete wrong element.)
         this.boba[i].x_pos = null;
         this.boba[i].y_pos = null;
         this.container.removeChild(this.boba[i].element)
@@ -401,7 +390,7 @@ BobaBoyApp = {
         console.log("boba balls:", this.boy.bobascollected)
       }
     }
-
+    
     //collision for the goal
     if (this.boy.x_pos >= this.goal.x_pos && this.boy.x_pos + 2 * this.boy.radius <= this.goal.x_pos + this.goal.width && this.boy.y_vel <= 0) {
       let distance = Math.abs(this.goal.y_pos - this.boy.y_pos)
@@ -410,7 +399,8 @@ BobaBoyApp = {
         this.endGame()
       }
     }
-    //obstacle collision
+    //Renz
+    //obstacle collision inspired by "clamp collision" also
     for (let i = 0; i < this.obstacles.length; i++) {
       let x = this.boy.x_pos + this.boy.radius
       let y = this.boy.y_pos + this.boy.radius
@@ -429,7 +419,7 @@ BobaBoyApp = {
     }
 
   },
-
+//Demitris
   movement: function () {
     //key code of a: 65, d: 68, left key: 37, right key: 39
     //key code of space bar is 32, w: 87, up key: 38
@@ -437,7 +427,6 @@ BobaBoyApp = {
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 4
         BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_right (1).png");
-
       }
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = -4
@@ -493,7 +482,7 @@ BobaBoyApp = {
       return this.boy.y_vel = this.boy.y_vel - 0.25;
     }
   },
-
+//Demitris
   moveBobaBoy: function () {
     this.boy.x_pos = this.boy.x_pos + this.boy.x_vel
     this.boy.y_pos = this.boy.y_pos - this.calculateVelocity()
@@ -514,7 +503,7 @@ BobaBoyApp = {
       }
     }
   },
-
+//Renz
   moveObstacles: function () {
     for (let i = 0; i < this.obstacles.length; i++) {
       this.obstacles[i].x_pos = this.obstacles[i].x_pos + this.obstacles[i].x_vel
@@ -578,7 +567,7 @@ BobaBoyApp = {
     }
 
   },
-
+//Found online. "clamp collision function"
   clamp: function (min, max, pos) {
     if (pos < min) {
       return min;
@@ -593,5 +582,4 @@ BobaBoyApp = {
 
 }
 
-//BobaBoyApp.startTimer();
 BobaBoyApp.init();
