@@ -476,6 +476,7 @@ BobaBoyApp = {
     }
   },
 
+  //Demitris
   calculateVelocity: function () {
     //calculated velocity here, factoring in gravity.
     if (this.boy.onPlatform == true) {
