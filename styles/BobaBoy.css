@@ -29,6 +29,15 @@ body {
   border-radius: 10px;
 }
 
+#title { 
+  position: absolute;
+  top: -15;
+  justify-content: center;
+  font-size: 50px;
+  font-family: "Lucida Console", "Courier New", monospace;
+  color: green;
+ }
+
 .boy{
     height: 20px;
     width: 20px;
