@@ -53,73 +53,15 @@ BobaBoyApp = {
     this.startTimer()
     this.movement()
 
-    for (let i = 0; i < 9; i++) {
-      BobaBoyApp.platforms.push(this.createPlatforms())
-
-      this.platforms[i].pic = document.createElement("img");
-      this.platforms[i].element.append(this.platforms[i].pic);
-      this.platforms[i].pic.className = "platformpic"
-      this.platforms[i].pic.setAttribute("src", "images/platform.png");
-      this.platforms[i].pic.setAttribute("height", "100");
-      this.platforms[i].pic.setAttribute("width", "300");
-    }
-    for (let i = 0; i < 4; i++) {
-      this.platforms[i].x_pos = Math.random() * 30 + 130 + i * 130
-      this.platforms[i].y_pos = Math.random() * 60 + 400 - i * 100
-    }
-    for (let i = 4; i < 7; i++) {
-      this.platforms[i].x_pos = Math.random() * 150 + 50
-      this.platforms[i].y_pos = Math.random() * 60 + 50 + (i - 4) * 100
-    }
-
-    for (let i = 7; i < 9; i++) {
-      this.platforms[i].y_pos = Math.random() * 60 + (i - 4) * 100
-    }
-    this.platforms[7].x_pos = Math.random() * 80 + 520
-    this.platforms[8].x_pos = Math.random() * 180 + 390
+    this.platformSetup()
     //
 
     //Renz
-    for (let i = 0; i < this.platforms.length; i++) {
-      BobaBoyApp.obstacles.push(this.createObstacles())
-
-      this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
-
-      if (Math.random() <= .5) {
-        this.obstacles[i].x_vel = 1
-        this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
-      } else {
-        this.obstacles[i].y_vel = -1;
-        if (Math.random() <= .5) {
-          this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length
-        } else {
-          this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
-        }
-      }
-    }//
+    this.obstacleSetup()//
 
     //Demitris
-    for (let i = 0; i < this.platforms.length; i++) {
-      BobaBoyApp.boba.push(this.createBoba())
-    }
-    for (let i = 0; i < this.platforms.length; i++) {
-      this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
-      this.boba[i].y_pos = this.platforms[i].y_pos - 15
-    }
-
-    for (let i = 0; i < this.platforms.length; i++) {
-      if (Math.random() <= 0.5) {
-        if (Math.random() <= 0.5) {
-          this.platforms[i].x_vel = Math.random() * 2 - 0.7
-        }
-        else {
-          this.platforms[i].x_vel = Math.random() * (-2) + 0.7
-        }
-      }
-      if (this.platforms[i].x_vel != 0) {
-        this.boba_position[i] = this.boba[i].x_pos
-      }
-    }//
+    this.bobaSetup()
+    //
 
     this.startGame()
 
@@ -161,6 +103,78 @@ BobaBoyApp = {
     }
     BobaBoyApp.boy = Boy
   },
+
+  platformSetup: function(){
+    for (let i = 0; i < 9; i++) {
+      BobaBoyApp.platforms.push(this.createPlatforms())
+
+      this.platforms[i].pic = document.createElement("img");
+      this.platforms[i].element.append(this.platforms[i].pic);
+      this.platforms[i].pic.className = "platformpic"
+      this.platforms[i].pic.setAttribute("src", "images/platform.png");
+      this.platforms[i].pic.setAttribute("height", "100");
+      this.platforms[i].pic.setAttribute("width", "300");
+    }
+    for (let i = 0; i < 4; i++) {
+      this.platforms[i].x_pos = Math.random() * 30 + 130 + i * 130
+      this.platforms[i].y_pos = Math.random() * 60 + 400 - i * 100
+    }
+    for (let i = 4; i < 7; i++) {
+      this.platforms[i].x_pos = Math.random() * 150 + 50
+      this.platforms[i].y_pos = Math.random() * 60 + 50 + (i - 4) * 100
+    }
+
+    for (let i = 7; i < 9; i++) {
+      this.platforms[i].y_pos = Math.random() * 60 + (i - 4) * 100
+    }
+    this.platforms[7].x_pos = Math.random() * 80 + 520
+    this.platforms[8].x_pos = Math.random() * 180 + 390
+  },
+
+  bobaSetup: function(){
+    for (let i = 0; i < this.platforms.length; i++) {
+      BobaBoyApp.boba.push(this.createBoba())
+    }
+    for (let i = 0; i < this.platforms.length; i++) {
+      this.boba[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length / 2
+      this.boba[i].y_pos = this.platforms[i].y_pos - 15
+    }
+
+    for (let i = 0; i < this.platforms.length; i++) {
+      if (Math.random() <= 0.5) {
+        if (Math.random() <= 0.5) {
+          this.platforms[i].x_vel = Math.random() * 2 - 0.7
+        }
+        else {
+          this.platforms[i].x_vel = Math.random() * (-2) + 0.7
+        }
+      }
+      if (this.platforms[i].x_vel != 0) {
+        this.boba_position[i] = this.boba[i].x_pos
+      }
+    }
+  },
+
+  obstacleSetup: function() {
+    for (let i = 0; i < this.platforms.length; i++) {
+      BobaBoyApp.obstacles.push(this.createObstacles())
+
+      this.obstacles[i].y_pos = this.platforms[i].y_pos - 20
+
+      if (Math.random() <= .5) {
+        this.obstacles[i].x_vel = 1
+        this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+      } else {
+        this.obstacles[i].y_vel = -1;
+        if (Math.random() <= .5) {
+          this.obstacles[i].x_pos = this.platforms[i].x_pos + this.platforms[i].x_length
+        } else {
+          this.obstacles[i].x_pos = this.platforms[i].x_pos - 20
+        }
+      }
+    
+  }
+},
 
   startGame: function () {
     this.simulationid = setInterval(this.animate.bind(BobaBoyApp), 20)
