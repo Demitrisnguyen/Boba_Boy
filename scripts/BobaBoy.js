@@ -419,8 +419,9 @@ BobaBoyApp = {
     }
 
   },
-//Demitris
+
   movement: function () {
+    //Renz
     //key code of a: 65, d: 68, left key: 37, right key: 39
     //key code of space bar is 32, w: 87, up key: 38
     window.onkeydown = function (event) {
@@ -431,7 +432,8 @@ BobaBoyApp = {
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = -4
         BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_left.png")
-      }
+      }//
+      //Demitris
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         //can only jump when he is on a platform. in this case: the ground
         //may have to make different scenarios for platforms we add in.
@@ -439,12 +441,13 @@ BobaBoyApp = {
           BobaBoyApp.boy.y_vel = 8.9
           BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_jump.png")
         }
-      }
+      }//
 
     }
 
 
     window.onkeyup = function (event) {
+      //Renz
       if (event.keyCode == 68 || event.keyCode == 39) {
         BobaBoyApp.boy.x_vel = 0
         BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
@@ -452,7 +455,8 @@ BobaBoyApp = {
       if (event.keyCode == 65 || event.keyCode == 37) {
         BobaBoyApp.boy.x_vel = 0
         BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
-      }
+      }//
+      //Demitris
       if (event.keyCode == 32 || event.keyCode == 87 || event.keyCode == 38) {
         if (BobaBoyApp.boy.onPlatform == false) {
           BobaBoyApp.boy.pic.setAttribute("src", "images/Bobaboy_stand.png")
@@ -463,9 +467,8 @@ BobaBoyApp = {
             //gives player more control over jump.
             BobaBoyApp.boy.y_vel = BobaBoyApp.boy.y_vel - BobaBoyApp.boy.y_vel * 0.7
             //making the value "0.7" higher makes it harder to jump, but more control.
-            //8 seems like a good integer to use for a natural jump.
           }
-        }
+        }//
       }
       if (event.keyCode == 27) {
         history.back()
