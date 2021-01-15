@@ -54,14 +54,10 @@ BobaBoyApp = {
     this.movement()
 
     this.platformSetup()
-    //
+  
+    this.obstacleSetup()
 
-    //Renz
-    this.obstacleSetup()//
-
-    //Demitris
     this.bobaSetup()
-    //
 
     this.startGame()
 
@@ -103,7 +99,7 @@ BobaBoyApp = {
     }
     BobaBoyApp.boy = Boy
   },
-
+//Demitris
   platformSetup: function(){
     for (let i = 0; i < 9; i++) {
       BobaBoyApp.platforms.push(this.createPlatforms())
@@ -130,7 +126,7 @@ BobaBoyApp = {
     this.platforms[7].x_pos = Math.random() * 80 + 520
     this.platforms[8].x_pos = Math.random() * 180 + 390
   },
-
+//Demitris
   bobaSetup: function(){
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.boba.push(this.createBoba())
@@ -154,7 +150,7 @@ BobaBoyApp = {
       }
     }
   },
-
+//Renz
   obstacleSetup: function() {
     for (let i = 0; i < this.platforms.length; i++) {
       BobaBoyApp.obstacles.push(this.createObstacles())
@@ -585,7 +581,7 @@ BobaBoyApp = {
     }
 
   },
-//Found online. "clamp collision function"
+//Found online. "clamp collision function" https://www.youtube.com/watch?v=_xj8FyG-aac&ab_channel=CodeTheBoat
   clamp: function (min, max, pos) {
     if (pos < min) {
       return min;
